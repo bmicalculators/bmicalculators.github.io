@@ -10,6 +10,14 @@ def index():
 def about():
     return render_template('about.html')
 
+@app.route('/bmi-women')
+def bmi_women():
+    return render_template('bmi_women.html')
+
+@app.route('/bmi-men')
+def bmi_men():
+    return render_template('bmi_men.html')
+
 @app.route('/terms')
 def terms():
     return render_template('legal/terms.html')
@@ -21,10 +29,6 @@ def privacy():
 @app.route('/disclaimer')
 def disclaimer():
     return render_template('legal/disclaimer.html')
-
-@app.route('/request')
-def request_calculator():
-    return render_template('request.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
