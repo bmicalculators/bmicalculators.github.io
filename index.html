@@ -28,6 +28,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6192588223043996" crossorigin="anonymous"></script>
     
@@ -147,7 +150,10 @@
                         
                         <div id="grading-chart" class="mt-4" style="display: none;">
                             <h4>Grading Chart:</h4>
-                            <div class="table-responsive">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="grade-chart"></canvas>
+                            </div>
+                            <div class="table-responsive mt-3">
                                 <table class="table grading-table">
                                     <thead>
                                         <tr>

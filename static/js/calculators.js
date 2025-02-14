@@ -1,4 +1,4 @@
-// EZ Grader Calculator functions
+// Initialize charts and calculators
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize navigation
     const calculatorButtons = document.querySelectorAll('.calculator-nav .btn-calculator');
@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedCalculator = document.getElementById(calculatorId);
             if (selectedCalculator) {
                 selectedCalculator.style.display = 'block';
+                // Re-initialize charts when calculator is shown
+                if (calculatorId === 'ez-grader') {
+                    initializeGradingChart();
+                }
             }
         });
     });
@@ -24,9 +28,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listeners for EZ Grader
     document.getElementById('show-chart')?.addEventListener('change', function() {
-        document.getElementById('grading-chart').style.display = this.checked ? 'block' : 'none';
-        if (this.checked) {
-            updateGradingChart();
+        const chartDiv = document.getElementById('grading-chart');
+        if (chartDiv) {
+            chartDiv.style.display = this.checked ? 'block' : 'none';
+            if (this.checked) {
+                initializeGradingChart();
+            }
         }
     });
 
@@ -34,26 +41,76 @@ document.addEventListener('DOMContentLoaded', function() {
     ['total-questions', 'wrong-answers'].forEach(id => {
         document.getElementById(id)?.addEventListener('input', calculateEZGrade);
     });
-
-    // Bind event listeners for Average Calculator
-    document.querySelector('button[onclick="resetGrades()"]').onclick = resetGrades;
-    document.querySelector('button[onclick="addGradeRow()"]').onclick = () => addGradeRow();
-
-    // Event listeners for Final Grade Calculator (Replaced with edited code)
-    ['current-grade', 'desired-grade', 'final-weight'].forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.addEventListener('input', calculateFinalGrade);
-            element.addEventListener('change', calculateFinalGrade);
-        }
-    });
-
-    const resetFinalBtn = document.querySelector('button[onclick="resetFinal()"]');
-    if (resetFinalBtn) {
-        resetFinalBtn.onclick = resetFinal;
-    }
 });
 
+// Initialize grading chart
+function initializeGradingChart() {
+    const chartCanvas = document.getElementById('grade-chart');
+    if (!chartCanvas) return;
+
+    // Destroy existing chart if it exists
+    const existingChart = Chart.getChart(chartCanvas);
+    if (existingChart) {
+        existingChart.destroy();
+    }
+
+    const total = parseInt(document.getElementById('total-questions').value) || 10;
+    const grades = [];
+    const labels = [];
+
+    for (let wrong = 0; wrong <= total; wrong++) {
+        const correct = total - wrong;
+        const percentage = (correct / total) * 100;
+        grades.push(percentage);
+        labels.push(wrong);
+    }
+
+    new Chart(chartCanvas, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Grade Percentage',
+                data: grades,
+                borderColor: '#4a90e2',
+                backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                tension: 0.1,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Grade Distribution'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Grade (%)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Wrong Answers'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// EZ Grader Calculator functions
 function calculateEZGrade() {
     const total = parseInt(document.getElementById('total-questions').value);
     const wrong = parseInt(document.getElementById('wrong-answers').value);
@@ -71,7 +128,7 @@ function calculateEZGrade() {
         `${correct}/${total} = ${showDecimals ? percentage.toFixed(2) : Math.round(percentage)}%`;
 
     if (document.getElementById('show-chart').checked) {
-        updateGradingChart();
+        initializeGradingChart();
     }
 }
 
@@ -146,7 +203,7 @@ function calculateAverage() {
     document.getElementById('average-result').textContent = result;
 }
 
-// Final Grade Calculator logic (Replaced with edited code)
+// Final Grade Calculator logic
 function calculateFinalGrade() {
     const currentGrade = parseFloat(document.getElementById('current-grade')?.value);
     const desiredGrade = parseFloat(document.getElementById('desired-grade')?.value);
@@ -185,7 +242,6 @@ function calculateFinalGrade() {
         }
     }
 }
-
 
 function resetFinal() {
     ['current-grade', 'desired-grade', 'final-weight'].forEach(id => {
