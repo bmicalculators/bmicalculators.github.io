@@ -12,17 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const calculatorButtons = document.querySelectorAll('.calculator-nav .btn-calculator');
     calculatorButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Remove active class from all buttons
             calculatorButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
             this.classList.add('active');
 
-            // Hide all calculator sections
             document.querySelectorAll('.calculator-section').forEach(section => {
                 section.style.display = 'none';
             });
 
-            // Show selected calculator
             const calculatorId = this.getAttribute('data-calculator');
             const selectedCalculator = document.getElementById(calculatorId);
             if (selectedCalculator) {
@@ -31,13 +27,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize grade rows for all tabs
+    // Initialize tab switching for average calculator
+    const gradeTypeTabs = document.querySelectorAll('.grade-type-tabs .tab-btn');
+    gradeTypeTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Update active tab
+            gradeTypeTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            // Show corresponding content
+            const tabType = this.getAttribute('data-calculator-tab');
+            document.querySelectorAll('.calculator-tab').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(`${tabType}-tab`).style.display = 'block';
+        });
+    });
+
+    // Add initial rows for each tab type
     addGradeRow('percentage');
     addGradeRow('letters');
     addGradeRow('points');
 
-    // Initialize tab switching
-    initializeTabSwitching();
+    // Bind event listeners
+    document.querySelector('button[onclick="resetGrades()"]').onclick = resetGrades;
+    document.querySelector('button[onclick="addGradeRow()"]').onclick = () => addGradeRow();
 
     // Event listeners for EZ Grader
     document.getElementById('show-chart')?.addEventListener('change', function() {
@@ -52,32 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById(id)?.addEventListener('input', calculateEZGrade);
     });
 });
-
-// Tab switching functionality
-function initializeTabSwitching() {
-    const tabButtons = document.querySelectorAll('.grade-type-tabs .tab-btn');
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const tabType = this.getAttribute('data-calculator-tab');
-
-            // Update active states
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-
-            // Hide all tabs and show selected
-            document.querySelectorAll('.calculator-tab').forEach(tab => {
-                tab.style.display = 'none';
-                tab.classList.remove('active');
-            });
-
-            const selectedTab = document.getElementById(`${tabType}-tab`);
-            if (selectedTab) {
-                selectedTab.style.display = 'block';
-                selectedTab.classList.add('active');
-            }
-        });
-    });
-}
 
 // EZ Grader Calculator functions
 function calculateEZGrade() {
@@ -128,7 +116,7 @@ let gradeCount = {
 
 function addGradeRow(forceType = null) {
     const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
-    const tabType = forceType || activeTab.getAttribute('data-calculator-tab');
+    const tabType = forceType || (activeTab ? activeTab.getAttribute('data-calculator-tab') : 'percentage');
     const container = document.getElementById(`${tabType}-grades`);
 
     if (!container) return;
@@ -137,22 +125,28 @@ function addGradeRow(forceType = null) {
     const row = document.createElement('div');
     row.className = 'row grade-row';
 
-    if (tabType === 'points') {
-        row.innerHTML = `
-            <div class="col-2">${gradeCount[tabType]}</div>
-            <div class="col-5"><input type="number" class="form-control text-center" min="0" onchange="calculateAverage()"></div>
-            <div class="col-5"><input type="number" class="form-control text-center" min="0" onchange="calculateAverage()"></div>
-        `;
-    } else if (tabType === 'letters') {
+    if (tabType === 'letters') {
         row.innerHTML = `
             <div class="col-2">${gradeCount[tabType]}</div>
             <div class="col-5">
                 <select class="form-select text-center" onchange="calculateAverage()">
-                    ${Object.keys(letterGrades).map(grade => `<option value="${grade}">${grade}</option>`).join('')}
+                    ${Object.keys(letterGrades).map(grade => 
+                        `<option value="${grade}">${grade}</option>`
+                    ).join('')}
                 </select>
             </div>
             <div class="col-5">
                 <input type="number" class="form-control text-center" min="0" max="100" value="100" onchange="calculateAverage()">
+            </div>
+        `;
+    } else if (tabType === 'points') {
+        row.innerHTML = `
+            <div class="col-2">${gradeCount[tabType]}</div>
+            <div class="col-5">
+                <input type="number" class="form-control text-center" min="0" onchange="calculateAverage()">
+            </div>
+            <div class="col-5">
+                <input type="number" class="form-control text-center" min="0" onchange="calculateAverage()">
             </div>
         `;
     } else {
@@ -173,6 +167,8 @@ function addGradeRow(forceType = null) {
 
 function resetGrades() {
     const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
+    if (!activeTab) return;
+
     const tabType = activeTab.getAttribute('data-calculator-tab');
     const container = document.getElementById(`${tabType}-grades`);
 
@@ -181,11 +177,13 @@ function resetGrades() {
     container.innerHTML = '';
     gradeCount[tabType] = 0;
     document.getElementById('average-result').textContent = '-';
-    addGradeRow();
+    addGradeRow(tabType);
 }
 
 function calculateAverage() {
     const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
+    if (!activeTab) return;
+
     const tabType = activeTab.getAttribute('data-calculator-tab');
     const container = document.getElementById(`${tabType}-grades`);
 
@@ -214,41 +212,32 @@ function calculateAverage() {
             const letterGrade = selects[0].value;
             grade = letterGrades[letterGrade];
             weight = parseFloat(inputs[0].value) || 0;
+            if (!isNaN(weight) && weight > 0) {
+                validGrades++;
+            }
         } else {
             grade = parseFloat(inputs[0].value);
             weight = parseFloat(inputs[1].value) || 0;
+            if (!isNaN(grade) && !isNaN(weight) && weight > 0) {
+                validGrades++;
+            }
         }
 
-        if (!isNaN(grade) && !isNaN(weight) && weight >= 0) {
+        if (!isNaN(grade) && !isNaN(weight) && weight > 0) {
             sum += grade * weight;
             totalWeight += weight;
-            validGrades++;
         }
     }
 
-    if (validGrades === 0) {
-        document.getElementById('average-result').textContent = '-';
-        return;
-    }
-
-    let average;
-    if (tabType === 'points') {
-        average = sum / validGrades;
-    } else {
-        average = totalWeight > 0 ? sum / totalWeight : sum / validGrades;
-    }
-
-    let result;
-    if (tabType === 'letters') {
-        result = getLetterGrade(average);
-    } else {
-        result = `${average.toFixed(2)}%`;
+    let result = '-';
+    if (validGrades > 0) {
+        const average = totalWeight > 0 ? sum / totalWeight : 0;
+        result = tabType === 'letters' ? getLetterGrade(average) : `${average.toFixed(2)}%`;
     }
 
     document.getElementById('average-result').textContent = result;
 }
 
-// Helper function to convert percentage to letter grade
 function getLetterGrade(percentage) {
     if (percentage >= 97) return 'A+';
     if (percentage >= 93) return 'A';
