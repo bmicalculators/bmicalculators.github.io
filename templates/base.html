@@ -62,13 +62,19 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-none d-lg-flex">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('bmi_women') }}">Women's BMI</a>
+                            <a class="nav-link" href="{{ url_for('what_is_bmi') }}">What is BMI</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('bmi_men') }}">Men's BMI</a>
+                            <a class="nav-link" href="{{ url_for('bmi_women') }}">Women</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('about') }}">About BMI</a>
+                            <a class="nav-link" href="{{ url_for('bmi_men') }}">Men</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('resources') }}">Resources</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
                         </li>
                     </ul>
                 </div>
@@ -92,13 +98,19 @@
         <div class="offcanvas-body">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('bmi_women') }}">Women's BMI</a>
+                    <a class="nav-link" href="{{ url_for('what_is_bmi') }}">What is BMI</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('bmi_men') }}">Men's BMI</a>
+                    <a class="nav-link" href="{{ url_for('bmi_women') }}">Women</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('about') }}">About BMI</a>
+                    <a class="nav-link" href="{{ url_for('bmi_men') }}">Men</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('resources') }}">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
                 </li>
             </ul>
         </div>

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container mt-4">
+    <section class="mb-5">
+        <h1 class="display-4 mb-4">What is BMI?</h1>
+        
+        <div class="content">
+            <article class="mb-5">
+                <h2>Understanding Body Mass Index</h2>
+                <p class="lead">Body Mass Index (BMI) is a simple but important measurement used to assess whether a person has a healthy body weight for their height. It is a value derived from an individual's weight and height.</p>
+
+                <div class="card bg-dark mb-4">
+                    <div class="card-body">
+                        <h3>BMI Categories</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Underweight
+                                <span class="badge bg-info">Below 18.5</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Normal Weight
+                                <span class="badge bg-success">18.5 - 24.9</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Overweight
+                                <span class="badge bg-warning">25 - 29.9</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Obese
+                                <span class="badge bg-danger">30 or greater</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>How is BMI Calculated?</h3>
+                <p>BMI is calculated using the following formulas:</p>
+                <div class="card bg-dark mb-4">
+                    <div class="card-body">
+                        <h4>Metric Formula</h4>
+                        <p>BMI = weight (kg) / height² (m²)</p>
+                        
+                        <h4>Imperial Formula</h4>
+                        <p>BMI = (weight (lbs) × 703) / height² (inches²)</p>
+                    </div>
+                </div>
+
+                <h3>Why Gender Matters in BMI</h3>
+                <p>BMI interpretation can vary between men and women due to different body compositions:</p>
+                <ul>
+                    <li>Men typically have more muscle mass</li>
+                    <li>Women naturally have higher body fat percentages</li>
+                    <li>Body fat distribution patterns differ between genders</li>
+                </ul>
+
+                <h3>Limitations of BMI</h3>
+                <p>While BMI is a useful screening tool, it has some limitations:</p>
+                <ul>
+                    <li>Doesn't account for muscle mass</li>
+                    <li>May not be suitable for athletes</li>
+                    <li>Doesn't measure body fat distribution</li>
+                    <li>May not be appropriate for elderly individuals</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+</main>
+
+<!-- Schema.org markup for BMI Information page -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "name": "What is BMI?",
+  "description": "Comprehensive guide to understanding Body Mass Index (BMI), its calculation methods, and importance in health assessment.",
+  "articleBody": "Body Mass Index (BMI) is a simple but important measurement used to assess whether a person has a healthy body weight for their height.",
+  "keywords": "BMI, Body Mass Index, health measurement, weight assessment, healthy weight"
+}
+</script>
+{% endblock %}

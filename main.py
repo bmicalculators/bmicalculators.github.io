@@ -10,6 +10,14 @@ def index():
 def about():
     return render_template('about.html')
 
+@app.route('/what-is-bmi')
+def what_is_bmi():
+    return render_template('what_is_bmi.html')
+
+@app.route('/resources')
+def resources():
+    return render_template('resources.html')
+
 @app.route('/bmi-women')
 def bmi_women():
     return render_template('bmi_women.html')
