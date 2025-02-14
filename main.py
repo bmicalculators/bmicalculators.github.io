@@ -26,6 +26,18 @@ def bmi_women():
 def bmi_men():
     return render_template('bmi_men.html')
 
+@app.route('/articles/healthy-eating')
+def healthy_eating():
+    return render_template('articles/healthy_eating.html')
+
+@app.route('/articles/physical-activity')
+def physical_activity():
+    return render_template('articles/physical_activity.html')
+
+@app.route('/articles/nutrition-labels')
+def nutrition_labels():
+    return render_template('articles/nutrition_labels.html')
+
 @app.route('/terms')
 def terms():
     return render_template('legal/terms.html')

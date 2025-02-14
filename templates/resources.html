@@ -4,7 +4,7 @@
 <main class="container mt-4">
     <section class="mb-5">
         <h1 class="display-4 mb-4">Health Resources</h1>
-        
+
         <div class="content">
             <article class="mb-5">
                 <h2>Weight Management Resources</h2>
@@ -60,34 +60,55 @@
                     </div>
 
                     <!-- Educational Resources -->
-                    <div class="col-md-6">
-                        <div class="card bg-dark h-100">
+                    <div class="col-md-12">
+                        <div class="card bg-dark">
                             <div class="card-body">
                                 <h3 class="card-title">
                                     <i class="fas fa-book me-2"></i>
                                     Educational Resources
                                 </h3>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <a href="#" class="text-decoration-none">
-                                            Healthy Eating Guidelines
-                                        </a>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <a href="#" class="text-decoration-none">
-                                            Physical Activity Recommendations
-                                        </a>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <a href="#" class="text-decoration-none">
-                                            Understanding Nutrition Labels
-                                        </a>
-                                    </li>
-                                </ul>
+                                <div class="row g-4 mt-2">
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4>
+                                                    <i class="fas fa-utensils me-2"></i>
+                                                    Healthy Eating
+                                                </h4>
+                                                <p>Learn the fundamentals of a balanced diet and proper nutrition.</p>
+                                                <a href="{{ url_for('healthy_eating') }}" class="btn btn-primary">Read More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4>
+                                                    <i class="fas fa-running me-2"></i>
+                                                    Physical Activity
+                                                </h4>
+                                                <p>Discover recommended exercise guidelines for optimal health.</p>
+                                                <a href="{{ url_for('physical_activity') }}" class="btn btn-primary">Read More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4>
+                                                    <i class="fas fa-tags me-2"></i>
+                                                    Nutrition Labels
+                                                </h4>
+                                                <p>Master the art of reading and understanding food labels.</p>
+                                                <a href="{{ url_for('nutrition_labels') }}" class="btn btn-primary">Read More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
+                    
                     <!-- Tools and Apps -->
                     <div class="col-md-6">
                         <div class="card bg-dark h-100">

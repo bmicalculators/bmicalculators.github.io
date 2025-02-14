@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container mt-4">
+    <section class="mb-5">
+        <h1 class="display-4 mb-4">Physical Activity Recommendations</h1>
+        
+        <div class="content">
+            <article class="mb-5">
+                <h2>Getting Active for Better Health</h2>
+                <p class="lead">Regular physical activity is crucial for maintaining a healthy weight and overall well-being. Learn how to incorporate more movement into your daily routine.</p>
+
+                <div class="card bg-dark mb-4">
+                    <div class="card-body">
+                        <h3>Weekly Activity Goals</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Moderate Aerobic Activity
+                                <span class="badge bg-info">150 minutes/week</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Vigorous Aerobic Activity
+                                <span class="badge bg-info">75 minutes/week</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Strength Training
+                                <span class="badge bg-info">2-3 sessions/week</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Types of Physical Activity</h3>
+                <div class="card bg-dark mb-4">
+                    <div class="card-body">
+                        <h4>Aerobic Activities</h4>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item">Walking or jogging</li>
+                            <li class="list-group-item">Swimming</li>
+                            <li class="list-group-item">Cycling</li>
+                            <li class="list-group-item">Dancing</li>
+                        </ul>
+
+                        <h4>Strength Training</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item">Weight lifting</li>
+                            <li class="list-group-item">Bodyweight exercises</li>
+                            <li class="list-group-item">Resistance band workouts</li>
+                            <li class="list-group-item">Yoga</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Getting Started Safely</h3>
+                <ul>
+                    <li>Start slowly and gradually increase intensity</li>
+                    <li>Warm up before exercise</li>
+                    <li>Stay hydrated</li>
+                    <li>Listen to your body</li>
+                    <li>Consult healthcare provider before starting new exercise routine</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+</main>
+
+<!-- Schema.org markup for Physical Activity article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "name": "Physical Activity Recommendations",
+  "description": "Guidelines for maintaining an active lifestyle with specific exercise recommendations.",
+  "keywords": "physical activity, exercise, fitness, strength training, aerobic activity"
+}
+</script>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container mt-4">
+    <section class="mb-5">
+        <h1 class="display-4 mb-4">Understanding Nutrition Labels</h1>
+        
+        <div class="content">
+            <article class="mb-5">
+                <h2>Reading Food Labels for Better Health</h2>
+                <p class="lead">Understanding nutrition labels is key to making informed food choices. Learn how to decode the information on food packaging to support your health goals.</p>
+
+                <div class="card bg-dark mb-4">
+                    <div class="card-body">
+                        <h3>Key Elements of a Nutrition Label</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <h4>Serving Size</h4>
+                                <p>All nutritional information is based on one serving</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h4>Calories</h4>
+                                <p>Energy content per serving</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h4>Nutrients</h4>
+                                <p>Amounts of fats, proteins, carbohydrates, and more</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h4>% Daily Value</h4>
+                                <p>Percentage of daily recommended intake</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Important Nutrients to Monitor</h3>
+                <div class="card bg-dark mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Limit These:</h4>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Saturated Fat</li>
+                                    <li class="list-group-item">Added Sugars</li>
+                                    <li class="list-group-item">Sodium</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Look For These:</h4>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Fiber</li>
+                                    <li class="list-group-item">Protein</li>
+                                    <li class="list-group-item">Vitamins & Minerals</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Tips for Label Reading</h3>
+                <ul>
+                    <li>Check serving sizes first</li>
+                    <li>Compare similar products</li>
+                    <li>Look at the ingredient list</li>
+                    <li>Be aware of marketing claims</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+</main>
+
+<!-- Schema.org markup for Nutrition Labels article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "name": "Understanding Nutrition Labels",
+  "description": "Guide to reading and understanding food nutrition labels for better health choices.",
+  "keywords": "nutrition labels, food labels, nutritional information, healthy eating, food choices"
+}
+</script>
+{% endblock %}

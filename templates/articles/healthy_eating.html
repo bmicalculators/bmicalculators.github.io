@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container mt-4">
+    <section class="mb-5">
+        <h1 class="display-4 mb-4">Healthy Eating Guidelines</h1>
+        
+        <div class="content">
+            <article class="mb-5">
+                <h2>Building a Balanced Diet</h2>
+                <p class="lead">A healthy eating pattern is fundamental to maintaining a healthy weight and preventing various health conditions. Here are essential guidelines to help you make better food choices.</p>
+
+                <div class="card bg-dark mb-4">
+                    <div class="card-body">
+                        <h3>Key Components of a Healthy Diet</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <h4>Fruits and Vegetables</h4>
+                                <p>Aim for 5-9 servings daily, varying colors to get different nutrients</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h4>Whole Grains</h4>
+                                <p>Choose brown rice, whole wheat bread, and oats over refined grains</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h4>Lean Proteins</h4>
+                                <p>Include fish, poultry, legumes, and plant-based proteins</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h4>Healthy Fats</h4>
+                                <p>Focus on sources like avocados, nuts, and olive oil</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Portion Control Tips</h3>
+                <div class="card bg-dark mb-4">
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Use smaller plates</li>
+                            <li class="list-group-item">Fill half your plate with vegetables</li>
+                            <li class="list-group-item">Measure portions when cooking</li>
+                            <li class="list-group-item">Listen to hunger cues</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Meal Planning Strategies</h3>
+                <p>Successful healthy eating starts with good planning:</p>
+                <ul>
+                    <li>Prepare meals in advance</li>
+                    <li>Keep healthy snacks readily available</li>
+                    <li>Create a weekly meal schedule</li>
+                    <li>Shop with a grocery list</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+</main>
+
+<!-- Schema.org markup for Healthy Eating article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "name": "Healthy Eating Guidelines",
+  "description": "Comprehensive guide to maintaining a balanced diet and healthy eating habits.",
+  "keywords": "healthy eating, nutrition, balanced diet, meal planning, portion control"
+}
+</script>
+{% endblock %}
