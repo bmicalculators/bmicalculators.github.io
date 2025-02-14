@@ -7,68 +7,171 @@ const letterGrades = {
     'F': 0
 };
 
+// Initialize the calculator
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize grade rows
+    addGradeRow();
+
+    // Initialize letter grade selects
+    const letterOptions = Object.keys(letterGrades);
+    const currentSelect = document.getElementById('current-letter');
+    const desiredSelect = document.getElementById('desired-letter');
+
+    if (currentSelect && desiredSelect) {
+        letterOptions.forEach(grade => {
+            currentSelect.add(new Option(grade, grade));
+            desiredSelect.add(new Option(grade, grade));
+        });
+    }
+
+    // Event listeners for EZ Grader
+    document.getElementById('show-chart').addEventListener('change', function() {
+        document.getElementById('grading-chart').style.display = this.checked ? 'block' : 'none';
+        if (this.checked) {
+            updateGradingChart();
+        }
+    });
+
+    // Auto-calculate when inputs change
+    ['total-questions', 'wrong-answers'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', calculateEZGrade);
+    });
+});
+
 // EZ Grader Calculator
 function calculateEZGrade() {
     const total = parseInt(document.getElementById('total-questions').value);
-    const correct = parseInt(document.getElementById('correct-answers').value);
-    
-    if (isNaN(total) || isNaN(correct) || total <= 0 || correct < 0 || correct > total) {
-        document.getElementById('ez-grade-result').textContent = 'Invalid input';
+    const wrong = parseInt(document.getElementById('wrong-answers').value);
+
+    if (isNaN(total) || isNaN(wrong) || total <= 0 || wrong < 0 || wrong > total) {
+        document.getElementById('ez-grade-result').textContent = '-/-';
         return;
     }
 
+    const correct = total - wrong;
     const percentage = (correct / total) * 100;
-    document.getElementById('ez-grade-result').textContent = `${percentage.toFixed(2)}%`;
+    const showDecimals = document.getElementById('show-decimals').checked;
+
+    document.getElementById('ez-grade-result').textContent = 
+        `${correct}/${total} = ${showDecimals ? percentage.toFixed(2) : Math.round(percentage)}%`;
+
+    if (document.getElementById('show-chart').checked) {
+        updateGradingChart();
+    }
+}
+
+function updateGradingChart() {
+    const total = parseInt(document.getElementById('total-questions').value);
+    if (isNaN(total) || total <= 0) return;
+
+    const tbody = document.getElementById('grade-chart-body');
+    tbody.innerHTML = '';
+
+    for (let wrong = 0; wrong <= total; wrong++) {
+        const correct = total - wrong;
+        const percentage = (correct / total) * 100;
+        const showDecimals = document.getElementById('show-decimals').checked;
+
+        const row = tbody.insertRow();
+        row.insertCell(0).textContent = wrong;
+        row.insertCell(1).textContent = showDecimals ? percentage.toFixed(2) + '%' : Math.round(percentage) + '%';
+    }
 }
 
 // Average Grade Calculator
+let gradeRowCount = 0;
+
+function addGradeRow() {
+    gradeRowCount++;
+    const activeTab = document.querySelector('.tab-pane.active');
+    const container = activeTab.querySelector('div[id$="-grades"]');
+
+    const row = document.createElement('div');
+    row.className = 'row grade-row';
+    row.innerHTML = `
+        <div class="col-2">${gradeRowCount}</div>
+        ${activeTab.id === 'points-tab' ? `
+            <div class="col-5"><input type="number" class="form-control" min="0" onchange="calculateAverage()"></div>
+            <div class="col-5"><input type="number" class="form-control" min="0" onchange="calculateAverage()"></div>
+        ` : `
+            <div class="col-5">
+                ${activeTab.id === 'letters-tab' ? `
+                    <select class="form-select" onchange="calculateAverage()">
+                        ${Object.keys(letterGrades).map(grade => `<option value="${grade}">${grade}</option>`).join('')}
+                    </select>
+                ` : `
+                    <input type="number" class="form-control" min="0" max="100" onchange="calculateAverage()">
+                `}
+            </div>
+            <div class="col-5"><input type="number" class="form-control" min="0" max="100" onchange="calculateAverage()"></div>
+        `}
+    `;
+    container.appendChild(row);
+}
+
+function resetGrades() {
+    const activeTab = document.querySelector('.tab-pane.active');
+    const container = activeTab.querySelector('div[id$="-grades"]');
+    container.innerHTML = '';
+    gradeRowCount = 0;
+    document.getElementById('average-result').textContent = '-';
+    addGradeRow();
+}
+
 function calculateAverage() {
-    const gradeType = document.getElementById('average-grade-type').value;
-    const gradesText = document.getElementById('grades-list').value;
-    const grades = gradesText.split('\n').filter(grade => grade.trim() !== '');
-
-    if (grades.length === 0) {
-        document.getElementById('average-result').textContent = 'No grades entered';
-        return;
-    }
-
+    const activeTab = document.querySelector('.tab-pane.active');
+    const rows = activeTab.getElementsByClassName('grade-row');
     let sum = 0;
+    let totalWeight = 0;
     let validGrades = 0;
 
-    for (let grade of grades) {
-        grade = grade.trim().toUpperCase();
-        let value;
+    for (let row of rows) {
+        const inputs = row.getElementsByTagName('input');
+        const selects = row.getElementsByTagName('select');
 
-        switch (gradeType) {
-            case 'percentage':
-                value = parseFloat(grade);
-                break;
-            case 'points':
-                value = parseFloat(grade);
-                break;
-            case 'letter':
-                value = letterGrades[grade];
-                break;
+        let grade, weight;
+
+        if (activeTab.id === 'points-tab') {
+            grade = parseFloat(inputs[0].value);
+            const maxGrade = parseFloat(inputs[1].value);
+            if (!isNaN(grade) && !isNaN(maxGrade) && maxGrade > 0) {
+                grade = (grade / maxGrade) * 100;
+                weight = 1;
+                validGrades++;
+            }
+        } else if (activeTab.id === 'letters-tab') {
+            const letterGrade = selects[0].value;
+            grade = letterGrades[letterGrade];
+            weight = parseFloat(inputs[0].value) || 0;
+        } else {
+            grade = parseFloat(inputs[0].value);
+            weight = parseFloat(inputs[1].value) || 0;
         }
 
-        if (!isNaN(value)) {
-            sum += value;
+        if (!isNaN(grade) && !isNaN(weight) && weight >= 0) {
+            sum += grade * weight;
+            totalWeight += weight;
             validGrades++;
         }
     }
 
     if (validGrades === 0) {
-        document.getElementById('average-result').textContent = 'Invalid grades';
+        document.getElementById('average-result').textContent = '-';
         return;
     }
 
-    const average = sum / validGrades;
-    let result;
+    let average;
+    if (activeTab.id === 'points-tab') {
+        average = sum / validGrades;
+    } else {
+        average = totalWeight > 0 ? sum / totalWeight : sum / validGrades;
+    }
 
-    if (gradeType === 'letter') {
+    let result;
+    if (activeTab.id === 'letters-tab') {
         result = getLetterGrade(average);
     } else {
-        result = `${average.toFixed(2)}${gradeType === 'percentage' ? '%' : ' points'}`;
+        result = `${average.toFixed(2)}%`;
     }
 
     document.getElementById('average-result').textContent = result;
@@ -76,47 +179,41 @@ function calculateAverage() {
 
 // Final Grade Calculator
 function calculateFinalGrade() {
-    const gradeType = document.getElementById('final-grade-type').value;
-    const currentGrade = document.getElementById('current-grade').value;
-    const finalWeight = parseFloat(document.getElementById('final-weight').value);
-    const desiredGrade = document.getElementById('desired-grade').value;
+    const isLetterGrade = document.getElementById('final-letters').classList.contains('active');
+    let currentGrade, desiredGrade;
 
-    if (isNaN(finalWeight) || finalWeight < 0 || finalWeight > 100) {
-        document.getElementById('final-grade-result').textContent = 'Invalid weight';
-        return;
-    }
-
-    let currentValue, desiredValue;
-
-    if (gradeType === 'points') {
-        currentValue = parseFloat(currentGrade);
-        desiredValue = parseFloat(desiredGrade);
+    if (isLetterGrade) {
+        currentGrade = letterGrades[document.getElementById('current-letter').value];
+        desiredGrade = letterGrades[document.getElementById('desired-letter').value];
+        weight = parseFloat(document.getElementById('final-letter-weight').value);
     } else {
-        currentValue = letterGrades[currentGrade.toUpperCase()];
-        desiredValue = letterGrades[desiredGrade.toUpperCase()];
+        currentGrade = parseFloat(document.getElementById('current-grade').value);
+        desiredGrade = parseFloat(document.getElementById('desired-grade').value);
+        weight = parseFloat(document.getElementById('final-weight').value);
     }
 
-    if (isNaN(currentValue) || isNaN(desiredValue)) {
-        document.getElementById('final-grade-result').textContent = 'Invalid grades';
+    if (isNaN(currentGrade) || isNaN(desiredGrade) || isNaN(weight) || 
+        weight < 0 || weight > 100) {
+        document.getElementById('final-grade-result').textContent = '-';
         return;
     }
 
-    const currentWeight = 100 - finalWeight;
-    const neededGrade = (desiredValue - (currentValue * currentWeight / 100)) / (finalWeight / 100);
+    const currentWeight = 100 - weight;
+    const neededGrade = (desiredGrade - (currentGrade * currentWeight / 100)) / (weight / 100);
 
     if (neededGrade > 100) {
         document.getElementById('final-grade-result').textContent = 'Not possible';
         return;
     }
 
-    let result;
-    if (gradeType === 'letter') {
-        result = getLetterGrade(neededGrade);
-    } else {
-        result = `${neededGrade.toFixed(2)} points`;
-    }
-
+    const result = isLetterGrade ? getLetterGrade(neededGrade) : `${neededGrade.toFixed(2)}%`;
     document.getElementById('final-grade-result').textContent = result;
+}
+
+function resetFinal() {
+    const inputs = document.querySelectorAll('#final-calculator input');
+    inputs.forEach(input => input.value = '');
+    document.getElementById('final-grade-result').textContent = '-';
 }
 
 // Helper function to convert percentage to letter grade
