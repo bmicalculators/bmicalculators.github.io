@@ -43,6 +43,7 @@ body {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
+    color: #212529;
 }
 
 .form-control, .form-select {
@@ -51,6 +52,15 @@ body {
     border-radius: 6px;
     font-size: 1rem;
     padding: 0.5rem 1rem;
+    background-color: #fff !important;
+    color: #212529 !important;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #fff !important;
+    color: #212529 !important;
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 .input-suffix {
@@ -100,6 +110,7 @@ body {
     margin-bottom: 1rem;
     padding: 0.5rem 0;
     border-bottom: 2px solid #dee2e6;
+    color: #212529;
 }
 
 .grade-row {
@@ -119,6 +130,7 @@ body {
     font-size: 1.5rem;
     font-weight: 600;
     margin: 1rem 0;
+    color: #212529;
 }
 
 /* Grading table */
@@ -133,6 +145,8 @@ body {
     padding: 0.75rem;
     border-bottom: 1px solid #dee2e6;
     text-align: center;
+    background-color: #fff;
+    color: #212529;
 }
 
 .grading-table th {
@@ -140,7 +154,7 @@ body {
     font-weight: 600;
 }
 
-.grading-table tr:nth-child(even) {
+.grading-table tr:nth-child(even) td {
     background-color: #f8f9fa;
 }
 
@@ -174,11 +188,18 @@ body {
 
 .form-check-input {
     cursor: pointer;
+    background-color: #fff !important;
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
 }
 
 .form-check-label {
     cursor: pointer;
     user-select: none;
+    color: #212529;
 }
 
 /* Responsive adjustments */
