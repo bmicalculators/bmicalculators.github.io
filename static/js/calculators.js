@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize grade rows
     addGradeRow();
 
-    // Initialize letter grade selects
+    // Initialize letter grade selects for final calculator
     const letterOptions = Object.keys(letterGrades);
     const currentSelect = document.getElementById('current-letter');
     const desiredSelect = document.getElementById('desired-letter');
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAverageCalculator();
 });
 
-// EZ Grader Calculator
+// EZ Grader Calculator functions...
 function calculateEZGrade() {
     const total = parseInt(document.getElementById('total-questions').value);
     const wrong = parseInt(document.getElementById('wrong-answers').value);
@@ -137,33 +137,50 @@ function addGradeRow() {
     const tabType = activeTab.getAttribute('data-calculator-tab');
     const container = document.getElementById(`${tabType}-grades`);
 
+    if (!container) return; // Guard clause if container not found
+
     const row = document.createElement('div');
     row.className = 'row grade-row';
-    row.innerHTML = `
-        <div class="col-2">${gradeRowCount}</div>
-        ${tabType === 'points' ? `
-            <div class="col-5"><input type="number" class="form-control" min="0" onchange="calculateAverage()"></div>
-            <div class="col-5"><input type="number" class="form-control" min="0" onchange="calculateAverage()"></div>
-        ` : `
+
+    if (tabType === 'points') {
+        row.innerHTML = `
+            <div class="col-2">${gradeRowCount}</div>
+            <div class="col-5"><input type="number" class="form-control text-center" min="0" onchange="calculateAverage()"></div>
+            <div class="col-5"><input type="number" class="form-control text-center" min="0" onchange="calculateAverage()"></div>
+        `;
+    } else if (tabType === 'letters') {
+        row.innerHTML = `
+            <div class="col-2">${gradeRowCount}</div>
             <div class="col-5">
-                ${tabType === 'letters' ? `
-                    <select class="form-select" onchange="calculateAverage()">
-                        ${Object.keys(letterGrades).map(grade => `<option value="${grade}">${grade}</option>`).join('')}
-                    </select>
-                ` : `
-                    <input type="number" class="form-control" min="0" max="100" onchange="calculateAverage()">
-                `}
+                <select class="form-select text-center" onchange="calculateAverage()">
+                    ${Object.keys(letterGrades).map(grade => `<option value="${grade}">${grade}</option>`).join('')}
+                </select>
             </div>
-            <div class="col-5"><input type="number" class="form-control" min="0" max="100" onchange="calculateAverage()"></div>
-        `}
-    `;
+            <div class="col-5">
+                <input type="number" class="form-control text-center" min="0" max="100" onchange="calculateAverage()">
+            </div>
+        `;
+    } else {
+        row.innerHTML = `
+            <div class="col-2">${gradeRowCount}</div>
+            <div class="col-5">
+                <input type="number" class="form-control text-center" min="0" max="100" onchange="calculateAverage()">
+            </div>
+            <div class="col-5">
+                <input type="number" class="form-control text-center" min="0" max="100" onchange="calculateAverage()">
+            </div>
+        `;
+    }
     container.appendChild(row);
+    calculateAverage();
 }
 
 function resetGrades() {
     const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
     const tabType = activeTab.getAttribute('data-calculator-tab');
     const container = document.getElementById(`${tabType}-grades`);
+
+    if (!container) return; // Guard clause if container not found
 
     container.innerHTML = '';
     gradeRowCount = 0;
@@ -175,8 +192,10 @@ function calculateAverage() {
     const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
     const tabType = activeTab.getAttribute('data-calculator-tab');
     const container = document.getElementById(`${tabType}-grades`);
-    const rows = container.getElementsByClassName('grade-row');
 
+    if (!container) return; // Guard clause if container not found
+
+    const rows = container.getElementsByClassName('grade-row');
     let sum = 0;
     let totalWeight = 0;
     let validGrades = 0;
