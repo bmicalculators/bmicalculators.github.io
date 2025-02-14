@@ -1,12 +1,4 @@
-// Grade letter to percentage conversion
-const letterGrades = {
-    'A+': 97, 'A': 93, 'A-': 90,
-    'B+': 87, 'B': 83, 'B-': 80,
-    'C+': 77, 'C': 73, 'C-': 70,
-    'D+': 67, 'D': 63, 'D-': 60,
-    'F': 0
-};
-
+// EZ Grader Calculator functions
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize navigation
     const calculatorButtons = document.querySelectorAll('.calculator-nav .btn-calculator');
@@ -27,31 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize tab switching for average calculator
-    const gradeTypeTabs = document.querySelectorAll('.grade-type-tabs .tab-btn');
-    gradeTypeTabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            // Update active tab
-            gradeTypeTabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-
-            // Show corresponding content
-            const tabType = this.getAttribute('data-calculator-tab');
-            document.querySelectorAll('.calculator-tab').forEach(content => {
-                content.style.display = 'none';
-            });
-            document.getElementById(`${tabType}-tab`).style.display = 'block';
-        });
-    });
-
-    // Add initial rows for each tab type
-    addGradeRow('percentage');
-    addGradeRow('letters');
-    addGradeRow('points');
-
-    // Bind event listeners
-    document.querySelector('button[onclick="resetGrades()"]').onclick = resetGrades;
-    document.querySelector('button[onclick="addGradeRow()"]').onclick = () => addGradeRow();
+    // Add initial grade row
+    addGradeRow();
 
     // Event listeners for EZ Grader
     document.getElementById('show-chart')?.addEventListener('change', function() {
@@ -65,9 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
     ['total-questions', 'wrong-answers'].forEach(id => {
         document.getElementById(id)?.addEventListener('input', calculateEZGrade);
     });
+
+    // Bind event listeners for Average Calculator
+    document.querySelector('button[onclick="resetGrades()"]').onclick = resetGrades;
+    document.querySelector('button[onclick="addGradeRow()"]').onclick = () => addGradeRow();
 });
 
-// EZ Grader Calculator functions
 function calculateEZGrade() {
     const total = parseInt(document.getElementById('total-questions').value);
     const wrong = parseInt(document.getElementById('wrong-answers').value);
@@ -108,166 +80,63 @@ function updateGradingChart() {
 }
 
 // Average Grade Calculator
-let gradeCount = {
-    percentage: 0,
-    letters: 0,
-    points: 0
-};
+let gradeCount = 0;
 
-function addGradeRow(forceType = null) {
-    const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
-    const tabType = forceType || (activeTab ? activeTab.getAttribute('data-calculator-tab') : 'percentage');
-    const container = document.getElementById(`${tabType}-grades`);
+function addGradeRow() {
+    gradeCount++;
+    const container = document.getElementById('percentage-grades');
 
-    if (!container) return;
-
-    gradeCount[tabType]++;
     const row = document.createElement('div');
     row.className = 'row grade-row';
-
-    if (tabType === 'letters') {
-        row.innerHTML = `
-            <div class="col-2">${gradeCount[tabType]}</div>
-            <div class="col-5">
-                <select class="form-select text-center" onchange="calculateAverage()">
-                    ${Object.keys(letterGrades).map(grade => 
-                        `<option value="${grade}">${grade}</option>`
-                    ).join('')}
-                </select>
-            </div>
-            <div class="col-5">
-                <input type="number" class="form-control text-center" min="0" max="100" value="100" onchange="calculateAverage()">
-            </div>
-        `;
-    } else if (tabType === 'points') {
-        row.innerHTML = `
-            <div class="col-2">${gradeCount[tabType]}</div>
-            <div class="col-5">
-                <input type="number" class="form-control text-center" min="0" onchange="calculateAverage()">
-            </div>
-            <div class="col-5">
-                <input type="number" class="form-control text-center" min="0" onchange="calculateAverage()">
-            </div>
-        `;
-    } else {
-        row.innerHTML = `
-            <div class="col-2">${gradeCount[tabType]}</div>
-            <div class="col-5">
-                <input type="number" class="form-control text-center" min="0" max="100" onchange="calculateAverage()">
-            </div>
-            <div class="col-5">
-                <input type="number" class="form-control text-center" min="0" max="100" value="100" onchange="calculateAverage()">
-            </div>
-        `;
-    }
+    row.innerHTML = `
+        <div class="col-2">${gradeCount}</div>
+        <div class="col-5">
+            <input type="number" class="form-control text-center" min="0" max="100" onchange="calculateAverage()">
+        </div>
+        <div class="col-5">
+            <input type="number" class="form-control text-center" min="0" max="100" value="100" onchange="calculateAverage()">
+        </div>
+    `;
 
     container.appendChild(row);
     calculateAverage();
 }
 
 function resetGrades() {
-    const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
-    if (!activeTab) return;
-
-    const tabType = activeTab.getAttribute('data-calculator-tab');
-    const container = document.getElementById(`${tabType}-grades`);
-
-    if (!container) return;
-
+    const container = document.getElementById('percentage-grades');
     container.innerHTML = '';
-    gradeCount[tabType] = 0;
+    gradeCount = 0;
     document.getElementById('average-result').textContent = '-';
-    addGradeRow(tabType);
+    addGradeRow();
 }
 
 function calculateAverage() {
-    const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
-    if (!activeTab) return;
-
-    const tabType = activeTab.getAttribute('data-calculator-tab');
-    const container = document.getElementById(`${tabType}-grades`);
-
-    if (!container) return;
-
-    const rows = container.getElementsByClassName('grade-row');
+    const rows = document.getElementsByClassName('grade-row');
     let sum = 0;
     let totalWeight = 0;
     let validGrades = 0;
 
     for (let row of rows) {
         const inputs = row.getElementsByTagName('input');
-        const selects = row.getElementsByTagName('select');
-
-        let grade, weight;
-
-        if (tabType === 'points') {
-            grade = parseFloat(inputs[0].value);
-            const maxGrade = parseFloat(inputs[1].value);
-            if (!isNaN(grade) && !isNaN(maxGrade) && maxGrade > 0) {
-                grade = (grade / maxGrade) * 100;
-                weight = 1;
-                validGrades++;
-            }
-        } else if (tabType === 'letters') {
-            const letterGrade = selects[0].value;
-            grade = letterGrades[letterGrade];
-            weight = parseFloat(inputs[0].value) || 0;
-            if (!isNaN(weight) && weight > 0) {
-                validGrades++;
-            }
-        } else {
-            grade = parseFloat(inputs[0].value);
-            weight = parseFloat(inputs[1].value) || 0;
-            if (!isNaN(grade) && !isNaN(weight) && weight > 0) {
-                validGrades++;
-            }
-        }
+        const grade = parseFloat(inputs[0].value);
+        const weight = parseFloat(inputs[1].value) || 0;
 
         if (!isNaN(grade) && !isNaN(weight) && weight > 0) {
             sum += grade * weight;
             totalWeight += weight;
+            validGrades++;
         }
     }
 
-    let result = '-';
-    if (validGrades > 0) {
-        const average = totalWeight > 0 ? sum / totalWeight : 0;
-        result = tabType === 'letters' ? getLetterGrade(average) : `${average.toFixed(2)}%`;
-    }
-
+    const result = validGrades > 0 ? `${(sum / totalWeight).toFixed(2)}%` : '-';
     document.getElementById('average-result').textContent = result;
-}
-
-function getLetterGrade(percentage) {
-    if (percentage >= 97) return 'A+';
-    if (percentage >= 93) return 'A';
-    if (percentage >= 90) return 'A-';
-    if (percentage >= 87) return 'B+';
-    if (percentage >= 83) return 'B';
-    if (percentage >= 80) return 'B-';
-    if (percentage >= 77) return 'C+';
-    if (percentage >= 73) return 'C';
-    if (percentage >= 70) return 'C-';
-    if (percentage >= 67) return 'D+';
-    if (percentage >= 63) return 'D';
-    if (percentage >= 60) return 'D-';
-    return 'F';
 }
 
 // Final Grade Calculator
 function calculateFinalGrade() {
-    const isLetterGrade = document.getElementById('final-letters').classList.contains('active');
-    let currentGrade, desiredGrade;
-
-    if (isLetterGrade) {
-        currentGrade = letterGrades[document.getElementById('current-letter').value];
-        desiredGrade = letterGrades[document.getElementById('desired-letter').value];
-        weight = parseFloat(document.getElementById('final-letter-weight').value);
-    } else {
-        currentGrade = parseFloat(document.getElementById('current-grade').value);
-        desiredGrade = parseFloat(document.getElementById('desired-grade').value);
-        weight = parseFloat(document.getElementById('final-weight').value);
-    }
+    const currentGrade = parseFloat(document.getElementById('current-grade').value);
+    const desiredGrade = parseFloat(document.getElementById('desired-grade').value);
+    const weight = parseFloat(document.getElementById('final-weight').value);
 
     if (isNaN(currentGrade) || isNaN(desiredGrade) || isNaN(weight) ||
         weight < 0 || weight > 100) {
@@ -283,8 +152,7 @@ function calculateFinalGrade() {
         return;
     }
 
-    const result = isLetterGrade ? getLetterGrade(neededGrade) : `${neededGrade.toFixed(2)}%`;
-    document.getElementById('final-grade-result').textContent = result;
+    document.getElementById('final-grade-result').textContent = `${neededGrade.toFixed(2)}%`;
 }
 
 function resetFinal() {
