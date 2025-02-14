@@ -4,192 +4,188 @@
 <main class="container mt-4">
     <section class="text-center mb-5">
         <h1 class="display-4">Grade Calculator</h1>
-        <p class="lead">Use this simple EZ Grading calculator to find quiz, test and assignment scores:</p>
+        <p class="lead">Enter grades and weights:</p>
     </section>
 
     <!-- Navigation Tabs -->
     <div class="calculator-nav text-center mb-4">
-        <a href="#ez-grader" class="btn btn-calculator me-2">Easy Grader</a>
-        <a href="#average-calculator" class="btn btn-calculator me-2">Average Grade Calculator</a>
-        <a href="#final-calculator" class="btn btn-calculator">Final Grade Calculator</a>
+        <button class="btn btn-calculator active me-2" data-calculator="ez-grader">Easy Grader</button>
+        <button class="btn btn-calculator me-2" data-calculator="average-calculator">Average Grade Calculator</button>
+        <button class="btn btn-calculator" data-calculator="final-calculator">Final Grade Calculator</button>
     </div>
 
-    <!-- EZ Grader -->
-    <section id="ez-grader" class="calculator-section mb-5">
-        <div class="calculator-card">
-            <div class="input-section">
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <label for="total-questions"># of questions:</label>
-                            <input type="number" class="form-control text-center" id="total-questions" min="1">
+    <!-- Calculator Sections -->
+    <div id="calculator-container">
+        <!-- EZ Grader -->
+        <section id="ez-grader" class="calculator-section mb-5 active">
+            <div class="calculator-card">
+                <div class="input-section">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <label for="total-questions"># of questions:</label>
+                                <input type="number" class="form-control text-center" id="total-questions" min="1">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <label for="wrong-answers"># wrong:</label>
+                                <input type="number" class="form-control text-center" id="wrong-answers" min="0">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <label for="wrong-answers"># wrong:</label>
-                            <input type="number" class="form-control text-center" id="wrong-answers" min="0">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="result-section text-center mt-4">
-                    <h3>Result</h3>
-                    <div id="ez-grade-result" class="grade-result">10/10 = 100%</div>
-                    <div class="options mt-3">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="show-chart">
-                            <label class="form-check-label" for="show-chart">Show Grading Chart</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="show-decimals">
-                            <label class="form-check-label" for="show-decimals">Show Decimals</label>
+                    <div class="result-section text-center mt-4">
+                        <h3>Result</h3>
+                        <div id="ez-grade-result" class="grade-result">-/-</div>
+                        <div class="options mt-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="show-chart">
+                                <label class="form-check-label" for="show-chart">Show Grading Chart</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="show-decimals">
+                                <label class="form-check-label" for="show-decimals">Show Decimals</label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div id="grading-chart" class="mt-4" style="display: none;">
-                    <h4>Grading Chart:</h4>
-                    <div class="table-responsive">
-                        <table class="table grading-table">
-                            <thead>
-                                <tr>
-                                    <th># Wrong</th>
-                                    <th>Grade</th>
-                                </tr>
-                            </thead>
-                            <tbody id="grade-chart-body"></tbody>
-                        </table>
+                    <div id="grading-chart" class="mt-4" style="display: none;">
+                        <h4>Grading Chart:</h4>
+                        <div class="table-responsive">
+                            <table class="table grading-table">
+                                <thead>
+                                    <tr>
+                                        <th># Wrong</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="grade-chart-body"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Average Grade Calculator -->
-    <section id="average-calculator" class="calculator-section mb-5">
-        <div class="calculator-card">
-            <div class="input-section">
-                <p class="text-center mb-4">Enter grades and weights:</p>
+        <!-- Average Grade Calculator -->
+        <section id="average-calculator" class="calculator-section mb-5" style="display: none;">
+            <div class="calculator-card">
+                <div class="input-section">
+                    <div class="grade-type-tabs">
+                        <button class="tab-btn active" data-bs-toggle="pill" data-bs-target="#percentage-tab">Percentage</button>
+                        <button class="tab-btn" data-bs-toggle="pill" data-bs-target="#letters-tab">Letters</button>
+                        <button class="tab-btn" data-bs-toggle="pill" data-bs-target="#points-tab">Points</button>
+                    </div>
 
-                <div class="grade-type-tabs">
-                    <button class="tab-btn active" data-bs-toggle="pill" data-bs-target="#percentage-tab">Percentage</button>
-                    <button class="tab-btn" data-bs-toggle="pill" data-bs-target="#letters-tab">Letters</button>
-                    <button class="tab-btn" data-bs-toggle="pill" data-bs-target="#points-tab">Points</button>
-                </div>
-
-                <div class="tab-content mt-4">
-                    <!-- Percentage Tab -->
-                    <div class="tab-pane fade show active" id="percentage-tab">
-                        <div class="grades-table">
-                            <div class="grade-header row">
-                                <div class="col-2">#</div>
-                                <div class="col-5">Grade (%)</div>
-                                <div class="col-5">Weight</div>
+                    <div class="tab-content mt-4">
+                        <div class="tab-pane fade show active" id="percentage-tab">
+                            <div class="grades-table">
+                                <div class="grade-header row">
+                                    <div class="col-2">#</div>
+                                    <div class="col-5">Grade (%)</div>
+                                    <div class="col-5">Weight</div>
+                                </div>
+                                <div id="percentage-grades"></div>
                             </div>
-                            <div id="percentage-grades"></div>
+                        </div>
+
+                        <div class="tab-pane fade" id="letters-tab">
+                            <div class="grades-table">
+                                <div class="grade-header row">
+                                    <div class="col-2">#</div>
+                                    <div class="col-5">Grade (letter)</div>
+                                    <div class="col-5">Weight</div>
+                                </div>
+                                <div id="letter-grades"></div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="points-tab">
+                            <div class="grades-table">
+                                <div class="grade-header row">
+                                    <div class="col-2">#</div>
+                                    <div class="col-5">Grade (points)</div>
+                                    <div class="col-5">Max Grade (optional)</div>
+                                </div>
+                                <div id="points-grades"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Letters Tab -->
-                    <div class="tab-pane fade" id="letters-tab">
-                        <div class="grades-table">
-                            <div class="grade-header row">
-                                <div class="col-2">#</div>
-                                <div class="col-5">Grade (letter)</div>
-                                <div class="col-5">Weight</div>
-                            </div>
-                            <div id="letter-grades"></div>
-                        </div>
+                    <div class="calculator-actions mt-4">
+                        <button class="btn btn-calculator" onclick="resetGrades()">Reset</button>
+                        <button class="btn btn-calculator ms-2" onclick="addGradeRow()">Add Row</button>
                     </div>
 
-                    <!-- Points Tab -->
-                    <div class="tab-pane fade" id="points-tab">
-                        <div class="grades-table">
-                            <div class="grade-header row">
-                                <div class="col-2">#</div>
-                                <div class="col-5">Grade (points)</div>
-                                <div class="col-5">Max Grade (optional)</div>
-                            </div>
-                            <div id="points-grades"></div>
-                        </div>
+                    <div class="result-section mt-4">
+                        <h3>Average Grade</h3>
+                        <div id="average-result" class="grade-result">-</div>
                     </div>
-                </div>
-
-                <div class="calculator-actions mt-4">
-                    <button class="btn btn-calculator" onclick="resetGrades()">Reset</button>
-                    <button class="btn btn-calculator ms-2" onclick="addGradeRow()">Add Row</button>
-                </div>
-
-                <div class="result-section mt-4">
-                    <h3>Average Grade</h3>
-                    <div id="average-result" class="grade-result">-</div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Final Grade Calculator -->
-    <section id="final-calculator" class="calculator-section mb-5">
-        <div class="calculator-card">
-            <div class="input-section">
-                <p class="text-center mb-4">Find out what grade you need on your final exam:</p>
+        <!-- Final Grade Calculator -->
+        <section id="final-calculator" class="calculator-section mb-5" style="display: none;">
+            <div class="calculator-card">
+                <div class="input-section">
+                    <div class="grade-type-tabs">
+                        <button class="tab-btn active" data-bs-toggle="pill" data-bs-target="#final-percentage">Percentage</button>
+                        <button class="tab-btn" data-bs-toggle="pill" data-bs-target="#final-letters">Letters</button>
+                    </div>
 
-                <div class="grade-type-tabs">
-                    <button class="tab-btn active" data-bs-toggle="pill" data-bs-target="#final-percentage">Percentage</button>
-                    <button class="tab-btn" data-bs-toggle="pill" data-bs-target="#final-letters">Letters</button>
-                </div>
-
-                <div class="tab-content mt-4">
-                    <div class="tab-pane fade show active" id="final-percentage">
-                        <div class="grade-inputs">
-                            <div class="input-group">
-                                <label for="current-grade">Current Grade</label>
-                                <input type="number" class="form-control text-center" id="current-grade" min="0" max="100">
-                                <span class="input-suffix">%</span>
+                    <div class="tab-content mt-4">
+                        <div class="tab-pane fade show active" id="final-percentage">
+                            <div class="grade-inputs">
+                                <div class="input-group">
+                                    <label for="current-grade">Current Grade</label>
+                                    <input type="number" class="form-control text-center" id="current-grade" min="0" max="100">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                                <div class="input-group">
+                                    <label for="desired-grade">Desired Grade</label>
+                                    <input type="number" class="form-control text-center" id="desired-grade" min="0" max="100">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                                <div class="input-group">
+                                    <label for="final-weight">Final Exam Weight</label>
+                                    <input type="number" class="form-control text-center" id="final-weight" min="0" max="100">
+                                    <span class="input-suffix">%</span>
+                                </div>
                             </div>
-                            <div class="input-group">
-                                <label for="desired-grade">Desired Grade</label>
-                                <input type="number" class="form-control text-center" id="desired-grade" min="0" max="100">
-                                <span class="input-suffix">%</span>
-                            </div>
-                            <div class="input-group">
-                                <label for="final-weight">Final Exam Weight</label>
-                                <input type="number" class="form-control text-center" id="final-weight" min="0" max="100">
-                                <span class="input-suffix">%</span>
+                        </div>
+
+                        <div class="tab-pane fade" id="final-letters">
+                            <div class="grade-inputs">
+                                <div class="input-group">
+                                    <label for="current-letter">Current Grade</label>
+                                    <select class="form-select text-center" id="current-letter"></select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="desired-letter">Desired Grade</label>
+                                    <select class="form-select text-center" id="desired-letter"></select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="final-letter-weight">Final Exam Weight</label>
+                                    <input type="number" class="form-control text-center" id="final-letter-weight" min="0" max="100">
+                                    <span class="input-suffix">%</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="final-letters">
-                        <div class="grade-inputs">
-                            <div class="input-group">
-                                <label for="current-letter">Current Grade</label>
-                                <select class="form-select text-center" id="current-letter"></select>
-                            </div>
-                            <div class="input-group">
-                                <label for="desired-letter">Desired Grade</label>
-                                <select class="form-select text-center" id="desired-letter"></select>
-                            </div>
-                            <div class="input-group">
-                                <label for="final-letter-weight">Final Exam Weight</label>
-                                <input type="number" class="form-control text-center" id="final-letter-weight" min="0" max="100">
-                                <span class="input-suffix">%</span>
-                            </div>
-                        </div>
+                    <div class="calculator-actions mt-4">
+                        <button class="btn btn-calculator" onclick="resetFinal()">Reset</button>
                     </div>
-                </div>
 
-                <div class="calculator-actions mt-4">
-                    <button class="btn btn-calculator" onclick="resetFinal()">Reset</button>
-                </div>
-
-                <div class="result-section mt-4">
-                    <h3>Final Exam Grade Needed:</h3>
-                    <div id="final-grade-result" class="grade-result">-</div>
+                    <div class="result-section mt-4">
+                        <h3>Final Exam Grade Needed:</h3>
+                        <div id="final-grade-result" class="grade-result">-</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 </main>
 {% endblock %}

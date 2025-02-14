@@ -7,8 +7,30 @@ const letterGrades = {
     'F': 0
 };
 
-// Initialize the calculator
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize navigation
+    const calculatorButtons = document.querySelectorAll('.calculator-nav .btn-calculator');
+    calculatorButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            calculatorButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            // Hide all calculator sections
+            document.querySelectorAll('.calculator-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Show selected calculator
+            const calculatorId = this.getAttribute('data-calculator');
+            const selectedCalculator = document.getElementById(calculatorId);
+            if (selectedCalculator) {
+                selectedCalculator.style.display = 'block';
+            }
+        });
+    });
+
     // Initialize grade rows
     addGradeRow();
 
@@ -25,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners for EZ Grader
-    document.getElementById('show-chart').addEventListener('change', function() {
+    document.getElementById('show-chart')?.addEventListener('change', function() {
         document.getElementById('grading-chart').style.display = this.checked ? 'block' : 'none';
         if (this.checked) {
             updateGradingChart();
@@ -52,7 +74,7 @@ function calculateEZGrade() {
     const percentage = (correct / total) * 100;
     const showDecimals = document.getElementById('show-decimals').checked;
 
-    document.getElementById('ez-grade-result').textContent = 
+    document.getElementById('ez-grade-result').textContent =
         `${correct}/${total} = ${showDecimals ? percentage.toFixed(2) : Math.round(percentage)}%`;
 
     if (document.getElementById('show-chart').checked) {
@@ -192,7 +214,7 @@ function calculateFinalGrade() {
         weight = parseFloat(document.getElementById('final-weight').value);
     }
 
-    if (isNaN(currentGrade) || isNaN(desiredGrade) || isNaN(weight) || 
+    if (isNaN(currentGrade) || isNaN(desiredGrade) || isNaN(weight) ||
         weight < 0 || weight > 100) {
         document.getElementById('final-grade-result').textContent = '-';
         return;
