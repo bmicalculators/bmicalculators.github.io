@@ -37,6 +37,7 @@ body {
 /* Input groups */
 .input-group {
     margin-bottom: 1.5rem;
+    position: relative;
 }
 
 .input-group label {
@@ -124,13 +125,23 @@ body {
     padding: 1.5rem;
     background-color: #f8f9fa;
     border-radius: 6px;
+    margin-top: 2rem;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .grade-result {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 600;
     margin: 1rem 0;
     color: #212529;
+}
+
+.result-message {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
 }
 
 /* Grading table */
@@ -163,6 +174,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    margin-top: 2rem;
 }
 
 .btn-calculator {
@@ -226,72 +238,45 @@ body {
 
 /* Update input section styles */
 .grade-inputs {
-    max-width: 400px;
+    max-width: 300px;
     margin: 0 auto;
 }
 
-.input-group {
-    margin-bottom: 1.5rem;
-    position: relative;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #212529;
-}
 
 .form-control {
     height: 45px;
     border: 1px solid #dee2e6;
     border-radius: 6px;
     font-size: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
     background-color: #fff;
     color: #212529;
     width: 100%;
-}
-
-/* Result section */
-.result-section {
     text-align: center;
-    padding: 1.5rem;
-    background-color: #f8f9fa;
-    border-radius: 6px;
-    margin-top: 2rem;
-}
-
-.grade-result {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 1rem 0;
-    color: #212529;
 }
 
 /* Final calculator specific styles */
-#final-calculator .input-group {
+#final-calculator .grade-inputs {
     max-width: 300px;
     margin-left: auto;
     margin-right: auto;
 }
 
-#final-calculator .input-suffix {
+#final-calculator .input-group {
+    position: relative;
+}
+
+#final-calculator .input-group .input-suffix {
     position: absolute;
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
     color: #6c757d;
     pointer-events: none;
+    user-select: none;
 }
 
-/* Calculator actions */
-.calculator-actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
+
 
 /* FAQ Section Styles */
 .faq-section {

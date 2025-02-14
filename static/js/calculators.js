@@ -39,12 +39,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('button[onclick="resetGrades()"]').onclick = resetGrades;
     document.querySelector('button[onclick="addGradeRow()"]').onclick = () => addGradeRow();
 
-    // Add event listeners for Final Grade Calculator
+    // Event listeners for Final Grade Calculator (Replaced with edited code)
     ['current-grade', 'desired-grade', 'final-weight'].forEach(id => {
-        document.getElementById(id)?.addEventListener('input', calculateFinalGrade);
+        const element = document.getElementById(id);
+        if (element) {
+            element.addEventListener('input', calculateFinalGrade);
+            element.addEventListener('change', calculateFinalGrade);
+        }
     });
 
-    document.querySelector('button[onclick="resetFinal()"]').onclick = resetFinal;
+    const resetFinalBtn = document.querySelector('button[onclick="resetFinal()"]');
+    if (resetFinalBtn) {
+        resetFinalBtn.onclick = resetFinal;
+    }
 });
 
 function calculateEZGrade() {
@@ -139,16 +146,24 @@ function calculateAverage() {
     document.getElementById('average-result').textContent = result;
 }
 
-// Final Grade Calculator
+// Final Grade Calculator logic (Replaced with edited code)
 function calculateFinalGrade() {
-    const currentGrade = parseFloat(document.getElementById('current-grade').value);
-    const desiredGrade = parseFloat(document.getElementById('desired-grade').value);
-    const finalWeight = parseFloat(document.getElementById('final-weight').value);
+    const currentGrade = parseFloat(document.getElementById('current-grade')?.value);
+    const desiredGrade = parseFloat(document.getElementById('desired-grade')?.value);
+    const finalWeight = parseFloat(document.getElementById('final-weight')?.value);
+    const resultElement = document.getElementById('final-grade-result');
+
+    if (!resultElement) return;
+
+    // Reset result
+    resultElement.textContent = '-';
+    resultElement.className = 'grade-result';
 
     // Validate inputs
     if (isNaN(currentGrade) || isNaN(desiredGrade) || isNaN(finalWeight) ||
+        currentGrade < 0 || currentGrade > 100 ||
+        desiredGrade < 0 || desiredGrade > 100 ||
         finalWeight <= 0 || finalWeight >= 100) {
-        document.getElementById('final-grade-result').textContent = '-';
         return;
     }
 
@@ -156,19 +171,32 @@ function calculateFinalGrade() {
     const currentWeight = 100 - finalWeight;
     const neededGrade = (desiredGrade - (currentGrade * (currentWeight / 100))) / (finalWeight / 100);
 
-    // Check if the goal is achievable
+    // Display result with appropriate message
     if (neededGrade > 100) {
-        document.getElementById('final-grade-result').textContent = 'Not possible';
+        resultElement.textContent = 'Not possible';
+        resultElement.className = 'grade-result text-danger';
     } else if (neededGrade < 0) {
-        document.getElementById('final-grade-result').textContent = 'Already achieved';
+        resultElement.textContent = 'Already achieved';
+        resultElement.className = 'grade-result text-success';
     } else {
-        document.getElementById('final-grade-result').textContent = `${neededGrade.toFixed(1)}%`;
+        resultElement.textContent = `${neededGrade.toFixed(1)}%`;
+        if (neededGrade > 90) {
+            resultElement.className = 'grade-result text-warning';
+        }
     }
 }
 
+
 function resetFinal() {
     ['current-grade', 'desired-grade', 'final-weight'].forEach(id => {
-        document.getElementById(id).value = '';
+        const element = document.getElementById(id);
+        if (element) {
+            element.value = '';
+        }
     });
-    document.getElementById('final-grade-result').textContent = '-';
+    const resultElement = document.getElementById('final-grade-result');
+    if (resultElement) {
+        resultElement.textContent = '-';
+        resultElement.className = 'grade-result';
+    }
 }
