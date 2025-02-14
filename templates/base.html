@@ -58,11 +58,9 @@
                     <i class="fas fa-calculator me-2"></i>
                     <span>BMI Calculator</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <!-- Desktop Navigation -->
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto d-none d-lg-flex">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('bmi_women') }}">Women's BMI</a>
                         </li>
@@ -74,9 +72,37 @@
                         </li>
                     </ul>
                 </div>
+                <!-- Mobile Menu Button -->
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Sidebar -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileSidebar">
+        <div class="offcanvas-header">
+            <a href="{{ url_for('index') }}" class="navbar-brand d-flex align-items-center">
+                <i class="fas fa-calculator me-2"></i>
+                <span>BMI Calculator</span>
+            </a>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('bmi_women') }}">Women's BMI</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('bmi_men') }}">Men's BMI</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About BMI</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Main Content -->
     {% block content %}{% endblock %}
