@@ -7,6 +7,31 @@ const letterGrades = {
     'F': 0
 };
 
+// Add this function to handle tab switching in the Average Grade Calculator
+function initializeAverageCalculator() {
+    const tabButtons = document.querySelectorAll('.grade-type-tabs .tab-btn');
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons and hide all tabs
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.calculator-tab').forEach(tab => {
+                tab.style.display = 'none';
+            });
+
+            // Add active class to clicked button and show corresponding tab
+            this.classList.add('active');
+            const tabId = this.getAttribute('data-calculator-tab') + '-tab';
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.style.display = 'block';
+            }
+
+            // Reset grades when switching tabs
+            resetGrades();
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize navigation
     const calculatorButtons = document.querySelectorAll('.calculator-nav .btn-calculator');
@@ -58,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
     ['total-questions', 'wrong-answers'].forEach(id => {
         document.getElementById(id)?.addEventListener('input', calculateEZGrade);
     });
+
+    // Initialize the Average Grade Calculator tabs
+    initializeAverageCalculator();
 });
 
 // EZ Grader Calculator
@@ -105,19 +133,20 @@ let gradeRowCount = 0;
 
 function addGradeRow() {
     gradeRowCount++;
-    const activeTab = document.querySelector('.tab-pane.active');
-    const container = activeTab.querySelector('div[id$="-grades"]');
+    const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
+    const tabType = activeTab.getAttribute('data-calculator-tab');
+    const container = document.getElementById(`${tabType}-grades`);
 
     const row = document.createElement('div');
     row.className = 'row grade-row';
     row.innerHTML = `
         <div class="col-2">${gradeRowCount}</div>
-        ${activeTab.id === 'points-tab' ? `
+        ${tabType === 'points' ? `
             <div class="col-5"><input type="number" class="form-control" min="0" onchange="calculateAverage()"></div>
             <div class="col-5"><input type="number" class="form-control" min="0" onchange="calculateAverage()"></div>
         ` : `
             <div class="col-5">
-                ${activeTab.id === 'letters-tab' ? `
+                ${tabType === 'letters' ? `
                     <select class="form-select" onchange="calculateAverage()">
                         ${Object.keys(letterGrades).map(grade => `<option value="${grade}">${grade}</option>`).join('')}
                     </select>
@@ -132,8 +161,10 @@ function addGradeRow() {
 }
 
 function resetGrades() {
-    const activeTab = document.querySelector('.tab-pane.active');
-    const container = activeTab.querySelector('div[id$="-grades"]');
+    const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
+    const tabType = activeTab.getAttribute('data-calculator-tab');
+    const container = document.getElementById(`${tabType}-grades`);
+
     container.innerHTML = '';
     gradeRowCount = 0;
     document.getElementById('average-result').textContent = '-';
@@ -141,8 +172,11 @@ function resetGrades() {
 }
 
 function calculateAverage() {
-    const activeTab = document.querySelector('.tab-pane.active');
-    const rows = activeTab.getElementsByClassName('grade-row');
+    const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
+    const tabType = activeTab.getAttribute('data-calculator-tab');
+    const container = document.getElementById(`${tabType}-grades`);
+    const rows = container.getElementsByClassName('grade-row');
+
     let sum = 0;
     let totalWeight = 0;
     let validGrades = 0;
@@ -153,7 +187,7 @@ function calculateAverage() {
 
         let grade, weight;
 
-        if (activeTab.id === 'points-tab') {
+        if (tabType === 'points') {
             grade = parseFloat(inputs[0].value);
             const maxGrade = parseFloat(inputs[1].value);
             if (!isNaN(grade) && !isNaN(maxGrade) && maxGrade > 0) {
@@ -161,7 +195,7 @@ function calculateAverage() {
                 weight = 1;
                 validGrades++;
             }
-        } else if (activeTab.id === 'letters-tab') {
+        } else if (tabType === 'letters') {
             const letterGrade = selects[0].value;
             grade = letterGrades[letterGrade];
             weight = parseFloat(inputs[0].value) || 0;
@@ -183,14 +217,14 @@ function calculateAverage() {
     }
 
     let average;
-    if (activeTab.id === 'points-tab') {
+    if (tabType === 'points') {
         average = sum / validGrades;
     } else {
         average = totalWeight > 0 ? sum / totalWeight : sum / validGrades;
     }
 
     let result;
-    if (activeTab.id === 'letters-tab') {
+    if (tabType === 'letters') {
         result = getLetterGrade(average);
     } else {
         result = `${average.toFixed(2)}%`;

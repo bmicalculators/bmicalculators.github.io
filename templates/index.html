@@ -73,13 +73,14 @@
             <div class="calculator-card">
                 <div class="input-section">
                     <div class="grade-type-tabs">
-                        <button class="tab-btn active" data-bs-toggle="pill" data-bs-target="#percentage-tab">Percentage</button>
-                        <button class="tab-btn" data-bs-toggle="pill" data-bs-target="#letters-tab">Letters</button>
-                        <button class="tab-btn" data-bs-toggle="pill" data-bs-target="#points-tab">Points</button>
+                        <button class="tab-btn active" data-calculator-tab="percentage">Percentage</button>
+                        <button class="tab-btn" data-calculator-tab="letters">Letters</button>
+                        <button class="tab-btn" data-calculator-tab="points">Points</button>
                     </div>
 
                     <div class="tab-content mt-4">
-                        <div class="tab-pane fade show active" id="percentage-tab">
+                        <!-- Percentage Tab -->
+                        <div id="percentage-tab" class="calculator-tab active">
                             <div class="grades-table">
                                 <div class="grade-header row">
                                     <div class="col-2">#</div>
@@ -90,7 +91,8 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane fade" id="letters-tab">
+                        <!-- Letters Tab -->
+                        <div id="letters-tab" class="calculator-tab" style="display: none;">
                             <div class="grades-table">
                                 <div class="grade-header row">
                                     <div class="col-2">#</div>
@@ -101,7 +103,8 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane fade" id="points-tab">
+                        <!-- Points Tab -->
+                        <div id="points-tab" class="calculator-tab" style="display: none;">
                             <div class="grades-table">
                                 <div class="grade-header row">
                                     <div class="col-2">#</div>
