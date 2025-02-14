@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://gradecalculators.github.io/</loc>
+        <loc>https://bmicalculators.github.io/</loc>
         <lastmod>2025-02-14</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://gradecalculators.github.io/about.html</loc>
+        <loc>https://bmicalculators.github.io/what-is-bmi.html</loc>
+        <lastmod>2025-02-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://bmicalculators.github.io/bmi-men.html</loc>
         <lastmod>2025-02-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://gradecalculators.github.io/request.html</loc>
+        <loc>https://bmicalculators.github.io/bmi-women.html</loc>
+        <lastmod>2025-02-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://bmicalculators.github.io/resources.html</loc>
         <lastmod>2025-02-14</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://gradecalculators.github.io/legal/terms.html</loc>
+        <loc>https://bmicalculators.github.io/about.html</loc>
         <lastmod>2025-02-14</lastmod>
-        <changefreq>yearly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://gradecalculators.github.io/legal/privacy.html</loc>
+        <loc>https://bmicalculators.github.io/legal/terms.html</loc>
         <lastmod>2025-02-14</lastmod>
         <changefreq>yearly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://gradecalculators.github.io/legal/disclaimer.html</loc>
+        <loc>https://bmicalculators.github.io/legal/privacy.html</loc>
         <lastmod>2025-02-14</lastmod>
         <changefreq>yearly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://bmicalculators.github.io/legal/disclaimer.html</loc>
+        <lastmod>2025-02-14</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
     </url>
 </urlset>
