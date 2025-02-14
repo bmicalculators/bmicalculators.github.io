@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container mt-4">
+    <!-- Hero Section -->
+    <section class="text-center mb-5">
+        <h1 class="display-4">Online Grade Calculator Tools</h1>
+        <p class="lead">Free, easy-to-use grade calculators for students and teachers</p>
+    </section>
+
+    <!-- EZ Grader -->
+    <section id="ez-grader" class="mb-5 calculator-section">
+        <div class="card">
+            <div class="card-header">
+                <h2>EZ Grader Calculator</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="total-questions" class="form-label">Total Questions</label>
+                            <input type="number" class="form-control" id="total-questions" min="1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="correct-answers" class="form-label">Correct Answers</label>
+                            <input type="number" class="form-control" id="correct-answers" min="0">
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateEZGrade()">Calculate</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-box">
+                            <h3>Result:</h3>
+                            <p id="ez-grade-result" class="h4">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Average Grade Calculator -->
+    <section id="average-calculator" class="mb-5 calculator-section">
+        <div class="card">
+            <div class="card-header">
+                <h2>Average Grade Calculator</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Grade Type</label>
+                            <select class="form-select" id="average-grade-type">
+                                <option value="percentage">Percentage</option>
+                                <option value="points">Points</option>
+                                <option value="letter">Letter Grade</option>
+                            </select>
+                        </div>
+                        <div id="grades-input" class="mb-3">
+                            <label class="form-label">Grades (one per line)</label>
+                            <textarea class="form-control" id="grades-list" rows="5"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateAverage()">Calculate Average</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-box">
+                            <h3>Result:</h3>
+                            <p id="average-result" class="h4">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Grade Calculator -->
+    <section id="final-calculator" class="mb-5 calculator-section">
+        <div class="card">
+            <div class="card-header">
+                <h2>Final Grade Calculator</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Grade Type</label>
+                            <select class="form-select" id="final-grade-type">
+                                <option value="points">Points</option>
+                                <option value="letter">Letter Grade</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="current-grade" class="form-label">Current Grade</label>
+                            <input type="text" class="form-control" id="current-grade">
+                        </div>
+                        <div class="mb-3">
+                            <label for="final-weight" class="form-label">Final Exam Weight (%)</label>
+                            <input type="number" class="form-control" id="final-weight" min="0" max="100">
+                        </div>
+                        <div class="mb-3">
+                            <label for="desired-grade" class="form-label">Desired Final Grade</label>
+                            <input type="text" class="form-control" id="desired-grade">
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateFinalGrade()">Calculate Needed Grade</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-box">
+                            <h3>Required Grade:</h3>
+                            <p id="final-grade-result" class="h4">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,30 @@
+/* Custom styles */
+.calculator-section {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.result-box {
+    background-color: var(--bs-dark);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    min-height: 150px;
+}
+
+.card {
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-dark);
+}
+
+.card-header {
+    background-color: var(--bs-dark);
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .result-box {
+        margin-top: 1rem;
+        min-height: auto;
+    }
+}
