@@ -1,201 +1,189 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main class="container mt-4">
-    <section class="text-center mb-5">
-        <h1 class="display-4">Grade Calculator</h1>
-        <p class="lead">Use this simple EZ Grading calculator to find quiz, test and assignment scores:</p>
-    </section>
-
-    <!-- Navigation Tabs -->
-    <div class="calculator-nav text-center mb-4">
-        <button class="btn btn-calculator active me-2" data-calculator="ez-grader">Easy Grader</button>
-        <button class="btn btn-calculator me-2" data-calculator="average-calculator">Average Grade Calculator</button>
-        <button class="btn btn-calculator" data-calculator="final-calculator">Final Grade Calculator</button>
+<!-- Hero Section -->
+<section class="hero-section text-center py-5 mb-4">
+    <div class="container">
+        <h1 class="display-3 mb-4">BMI Calculator</h1>
+        <p class="lead mb-4">Calculate your Body Mass Index (BMI) with our accurate calculator designed for both men and women. Get personalized health insights based on your measurements.</p>
+        <div class="hero-cta">
+            <button class="btn btn-primary btn-lg me-3" onclick="scrollToCalculator()">Calculate Your BMI</button>
+            <button class="btn btn-outline-primary btn-lg" onclick="scrollToFeatures()">Learn More</button>
+        </div>
     </div>
+</section>
 
-    <!-- Calculator Sections -->
-    <div id="calculator-container">
-        <!-- EZ Grader -->
-        <section id="ez-grader" class="calculator-section mb-5 active">
-            <div class="calculator-card">
-                <div class="input-section">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <label for="total-questions"># of questions:</label>
-                                <input type="number" class="form-control text-center" id="total-questions" min="1">
+<!-- Calculator Section -->
+<section id="calculator-section" class="py-5 bg-dark">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">BMI Calculator Tool</h2>
+
+                        <!-- Gender Toggle -->
+                        <div class="text-center mb-4">
+                            <div class="btn-group" role="group" aria-label="Gender Selection">
+                                <input type="radio" class="btn-check" name="gender" id="male" value="men" checked>
+                                <label class="btn btn-outline-primary" for="male">Men's Calculator</label>
+
+                                <input type="radio" class="btn-check" name="gender" id="female" value="women">
+                                <label class="btn btn-outline-primary" for="female">Women's Calculator</label>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <label for="wrong-answers"># wrong:</label>
-                                <input type="number" class="form-control text-center" id="wrong-answers" min="0">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="result-section text-center mt-4">
-                        <h3>Result</h3>
-                        <div id="ez-grade-result" class="grade-result">-/-</div>
-                        <div class="options mt-3">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="show-chart">
-                                <label class="form-check-label" for="show-chart">Show Grading Chart</label>
+                        <!-- Calculator Form -->
+                        <div class="calculator-form">
+                            <!-- Personal Information -->
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age (years)</label>
+                                <input type="number" class="form-control" id="age" min="18" max="120">
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="show-decimals">
-                                <label class="form-check-label" for="show-decimals">Show Decimals</label>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div id="grading-chart" class="mt-4" style="display: none;">
-                        <h4>Grading Chart:</h4>
-                        <div class="table-responsive">
-                            <table class="table grading-table">
-                                <thead>
-                                    <tr>
-                                        <th># Wrong</th>
-                                        <th>Grade</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="grade-chart-body"></tbody>
-                            </table>
+                            <!-- Unit Toggle -->
+                            <div class="btn-group mb-4 w-100" role="group" aria-label="Unit Toggle">
+                                <input type="radio" class="btn-check" name="units" id="metric" autocomplete="off" checked>
+                                <label class="btn btn-outline-primary" for="metric">Metric</label>
+
+                                <input type="radio" class="btn-check" name="units" id="imperial" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="imperial">Imperial</label>
+                            </div>
+
+                            <!-- Metric Inputs -->
+                            <div id="metric-inputs">
+                                <div class="mb-3">
+                                    <label for="weight-kg" class="form-label">Weight (kg)</label>
+                                    <input type="number" class="form-control" id="weight-kg" min="20" max="300" step="0.1">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="height-cm" class="form-label">Height (cm)</label>
+                                    <input type="number" class="form-control" id="height-cm" min="100" max="250">
+                                </div>
+                            </div>
+
+                            <!-- Imperial Inputs -->
+                            <div id="imperial-inputs" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="weight-lb" class="form-label">Weight (lbs)</label>
+                                    <input type="number" class="form-control" id="weight-lb" min="44" max="660" step="0.1">
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="height-ft" class="form-label">Height (ft)</label>
+                                        <input type="number" class="form-control" id="height-ft" min="3" max="8">
+                                    </div>
+                                    <div class="col">
+                                        <label for="height-in" class="form-label">Inches</label>
+                                        <input type="number" class="form-control" id="height-in" min="0" max="11">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary w-100" onclick="calculateBMI(document.querySelector('input[name=gender]:checked').value)">Calculate BMI</button>
+
+                            <div id="bmi-result" class="mt-4 text-center" style="display: none;">
+                                <h3>Your BMI</h3>
+                                <div class="display-4 mb-3" id="bmi-value">-</div>
+                                <p class="lead" id="bmi-category"></p>
+                                <p id="age-specific-advice"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Average Grade Calculator -->
-        <section id="average-calculator" class="calculator-section mb-5" style="display: none;">
-            <div class="calculator-card">
-                <div class="input-section">
-                    <div class="grades-table">
-                        <div class="grade-header row">
-                            <div class="col-2">#</div>
-                            <div class="col-5">Grade (%)</div>
-                            <div class="col-5">Weight</div>
-                        </div>
-                        <div id="percentage-grades"></div>
-                    </div>
-
-                    <div class="calculator-actions mt-4">
-                        <button class="btn btn-calculator" onclick="resetGrades()">Reset</button>
-                        <button class="btn btn-calculator ms-2" onclick="addGradeRow()">Add Row</button>
-                    </div>
-
-                    <div class="result-section mt-4">
-                        <h3>Average Grade</h3>
-                        <div id="average-result" class="grade-result">-</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Final Grade Calculator -->
-        <section id="final-calculator" class="calculator-section mb-5" style="display: none;">
-            <div class="calculator-card">
-                <div class="input-section">
-                    <div class="grade-inputs">
-                        <div class="input-group">
-                            <label for="current-grade">Current Grade</label>
-                            <input type="number" class="form-control text-center" id="current-grade" min="0" max="100">
-                            <span class="input-suffix">%</span>
-                        </div>
-                        <div class="input-group">
-                            <label for="desired-grade">Desired Grade</label>
-                            <input type="number" class="form-control text-center" id="desired-grade" min="0" max="100">
-                            <span class="input-suffix">%</span>
-                        </div>
-                        <div class="input-group">
-                            <label for="final-weight">Final Exam Weight</label>
-                            <input type="number" class="form-control text-center" id="final-weight" min="0" max="100">
-                            <span class="input-suffix">%</span>
-                        </div>
-                    </div>
-
-                    <div class="calculator-actions mt-4">
-                        <button class="btn btn-calculator" onclick="resetFinal()">Reset</button>
-                    </div>
-
-                    <div class="result-section mt-4">
-                        <h3>Final Exam Grade Needed:</h3>
-                        <div id="final-grade-result" class="grade-result">-</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section class="faq-section mt-5 mb-5">
-            <h2 class="text-center mb-4">Frequently Asked Questions</h2>
-            <div class="accordion" id="gradingFaq">
-                <!-- EZ Grader FAQ -->
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                            What is an EZ Grader and how does it work?
-                        </button>
-                    </h3>
-                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#gradingFaq">
-                        <div class="accordion-body">
-                            An EZ Grader is a simple online tool that quickly calculates percentage grades based on the number of questions and incorrect answers. Our online EZ grader automatically converts raw scores to percentages, making grading faster and more accurate.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Grade Calculator FAQ -->
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                            How do I calculate my final grade using the grade calculator?
-                        </button>
-                    </h3>
-                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#gradingFaq">
-                        <div class="accordion-body">
-                            To calculate your final grade, enter your current grade percentage, desired final grade, and the weight of your final exam. The calculator will determine what score you need on the final exam to achieve your desired grade.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Online Calculator FAQ -->
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                            Why use an online grade calculator?
-                        </button>
-                    </h3>
-                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#gradingFaq">
-                        <div class="accordion-body">
-                            Online grade calculators offer several advantages:
-                            <ul>
-                                <li>Instant calculations without manual math</li>
-                                <li>Accurate results every time</li>
-                                <li>Multiple calculation types (EZ Grader, weighted averages, final grade predictions)</li>
-                                <li>Accessible from any device with internet access</li>
-                                <li>Free to use and always available</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Weighted Grades FAQ -->
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                            How do weighted grades work in the average grade calculator?
-                        </button>
-                    </h3>
-                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#gradingFaq">
-                        <div class="accordion-body">
-                            The weighted grade calculator takes into account both your grade and its importance (weight) in the final average. For example, if a midterm is worth 30% of your grade and a final is worth 70%, the calculator will properly factor these weights into your final grade calculation.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
     </div>
-</main>
+</section>
+
+<!-- Features Section -->
+<section id="features-section" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Use Our BMI Calculator?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-venus-mars fa-3x mb-3"></i>
+                    <h3>Gender-Specific</h3>
+                    <p>Separate calculations for men and women, providing more accurate and relevant results.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-chart-line fa-3x mb-3"></i>
+                    <h3>Instant Results</h3>
+                    <p>Get your BMI calculation instantly with detailed health insights and recommendations.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-user-md fa-3x mb-3"></i>
+                    <h3>Health Insights</h3>
+                    <p>Receive personalized health advice based on your age, gender, and BMI category.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq-section" class="py-5 bg-dark">
+    <div class="container">
+        <h2 class="text-center mb-5">Frequently Asked Questions</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="bmiAccordion">
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                What is BMI and why is it important?
+                            </button>
+                        </h3>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#bmiAccordion">
+                            <div class="accordion-body">
+                                Body Mass Index (BMI) is a numerical value calculated from your weight and height. It's a reliable indicator of body fatness for most people and is used to screen for weight categories that may lead to health problems.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Why use separate BMI calculators for men and women?
+                            </button>
+                        </h3>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#bmiAccordion">
+                            <div class="accordion-body">
+                                Men and women have different body compositions and distributions of muscle and fat. Using gender-specific BMI calculators provides more accurate assessments and tailored health recommendations.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How often should I calculate my BMI?
+                            </button>
+                        </h3>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#bmiAccordion">
+                            <div class="accordion-body">
+                                It's recommended to calculate your BMI every 3-6 months, or whenever there's a significant change in your weight or lifestyle. Regular monitoring helps track your health progress effectively.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function scrollToCalculator() {
+    document.getElementById('calculator-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToFeatures() {
+    document.getElementById('features-section').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
 {% endblock %}
