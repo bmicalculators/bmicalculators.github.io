@@ -38,6 +38,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Bind event listeners for Average Calculator
     document.querySelector('button[onclick="resetGrades()"]').onclick = resetGrades;
     document.querySelector('button[onclick="addGradeRow()"]').onclick = () => addGradeRow();
+
+    // Add event listeners for Final Grade Calculator
+    ['current-grade', 'desired-grade', 'final-weight'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', calculateFinalGrade);
+    });
+
+    document.querySelector('button[onclick="resetFinal()"]').onclick = resetFinal;
 });
 
 function calculateEZGrade() {
@@ -136,27 +143,32 @@ function calculateAverage() {
 function calculateFinalGrade() {
     const currentGrade = parseFloat(document.getElementById('current-grade').value);
     const desiredGrade = parseFloat(document.getElementById('desired-grade').value);
-    const weight = parseFloat(document.getElementById('final-weight').value);
+    const finalWeight = parseFloat(document.getElementById('final-weight').value);
 
-    if (isNaN(currentGrade) || isNaN(desiredGrade) || isNaN(weight) ||
-        weight < 0 || weight > 100) {
+    // Validate inputs
+    if (isNaN(currentGrade) || isNaN(desiredGrade) || isNaN(finalWeight) ||
+        finalWeight <= 0 || finalWeight >= 100) {
         document.getElementById('final-grade-result').textContent = '-';
         return;
     }
 
-    const currentWeight = 100 - weight;
-    const neededGrade = (desiredGrade - (currentGrade * currentWeight / 100)) / (weight / 100);
+    // Calculate needed grade
+    const currentWeight = 100 - finalWeight;
+    const neededGrade = (desiredGrade - (currentGrade * (currentWeight / 100))) / (finalWeight / 100);
 
+    // Check if the goal is achievable
     if (neededGrade > 100) {
         document.getElementById('final-grade-result').textContent = 'Not possible';
-        return;
+    } else if (neededGrade < 0) {
+        document.getElementById('final-grade-result').textContent = 'Already achieved';
+    } else {
+        document.getElementById('final-grade-result').textContent = `${neededGrade.toFixed(1)}%`;
     }
-
-    document.getElementById('final-grade-result').textContent = `${neededGrade.toFixed(2)}%`;
 }
 
 function resetFinal() {
-    const inputs = document.querySelectorAll('#final-calculator input');
-    inputs.forEach(input => input.value = '');
+    ['current-grade', 'desired-grade', 'final-weight'].forEach(id => {
+        document.getElementById(id).value = '';
+    });
     document.getElementById('final-grade-result').textContent = '-';
 }
