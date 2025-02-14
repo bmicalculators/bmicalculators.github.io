@@ -51,56 +51,32 @@
 </head>
 <body>
     <!-- Header -->
-    <section class="py-4">
+    <header class="header">
         <div class="container">
-            <nav class="hidden justify-between lg:flex">
-                <div class="flex items-center gap-6">
-                    <a href="{{ url_for('index') }}" class="navbar-brand d-flex align-items-center gap-2">
-                        <i class="fas fa-calculator fs-4"></i>
-                        <span class="fs-4 fw-semibold">BMI Calculator</span>
-                    </a>
-                    <div class="nav-links ms-4">
-                        <ul class="navbar-nav flex-row gap-4">
-                            <li class="nav-item">
-                                <a class="nav-link px-3 py-2 rounded-3 text-muted-foreground hover-bg-muted" href="{{ url_for('bmi_women') }}">Women's BMI</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 py-2 rounded-3 text-muted-foreground hover-bg-muted" href="{{ url_for('bmi_men') }}">Men's BMI</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-3 py-2 rounded-3 text-muted-foreground hover-bg-muted" href="{{ url_for('about') }}">About BMI</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- Mobile Navigation -->
-            <div class="d-lg-none">
-                <div class="d-flex align-items-center justify-content-between">
-                    <a href="{{ url_for('index') }}" class="navbar-brand d-flex align-items-center gap-2">
-                        <i class="fas fa-calculator fs-4"></i>
-                        <span class="fs-4 fw-semibold">BMI Calculator</span>
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse mt-3" id="navbarNav">
-                    <ul class="navbar-nav">
+            <nav class="navbar navbar-expand-lg">
+                <a href="{{ url_for('index') }}" class="navbar-brand d-flex align-items-center">
+                    <i class="fas fa-calculator me-2"></i>
+                    <span>BMI Calculator</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 rounded-3" href="{{ url_for('bmi_women') }}">Women's BMI</a>
+                            <a class="nav-link" href="{{ url_for('bmi_women') }}">Women's BMI</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 rounded-3" href="{{ url_for('bmi_men') }}">Men's BMI</a>
+                            <a class="nav-link" href="{{ url_for('bmi_men') }}">Men's BMI</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 rounded-3" href="{{ url_for('about') }}">About BMI</a>
+                            <a class="nav-link" href="{{ url_for('about') }}">About BMI</a>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </nav>
         </div>
-    </section>
+    </header>
 
     <!-- Main Content -->
     {% block content %}{% endblock %}

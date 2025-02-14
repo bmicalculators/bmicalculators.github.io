@@ -1,3 +1,65 @@
+/* Header Styles */
+.header {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-darker);
+    margin-bottom: 2rem;
+}
+
+.navbar {
+    padding: 0;
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-color) !important;
+    text-decoration: none;
+}
+
+.navbar-brand i {
+    font-size: 1.5rem;
+}
+
+.navbar-nav {
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: var(--text-muted) !important;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--text-color) !important;
+}
+
+.navbar-toggler {
+    padding: 0;
+    border: none;
+    color: var(--text-color);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        margin-top: 1rem;
+    }
+
+    .navbar-nav {
+        gap: 0;
+    }
+
+    .nav-link {
+        padding: 0.75rem 0;
+    }
+}
+
 /* Navigation Styles */
 .navbar-brand {
     text-decoration: none;
