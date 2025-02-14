@@ -127,6 +127,75 @@
                 </div>
             </div>
         </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section mt-5 mb-5">
+            <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+            <div class="accordion" id="gradingFaq">
+                <!-- EZ Grader FAQ -->
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            What is an EZ Grader and how does it work?
+                        </button>
+                    </h3>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#gradingFaq">
+                        <div class="accordion-body">
+                            An EZ Grader is a simple online tool that quickly calculates percentage grades based on the number of questions and incorrect answers. Our online EZ grader automatically converts raw scores to percentages, making grading faster and more accurate.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grade Calculator FAQ -->
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            How do I calculate my final grade using the grade calculator?
+                        </button>
+                    </h3>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#gradingFaq">
+                        <div class="accordion-body">
+                            To calculate your final grade, enter your current grade percentage, desired final grade, and the weight of your final exam. The calculator will determine what score you need on the final exam to achieve your desired grade.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Online Calculator FAQ -->
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            Why use an online grade calculator?
+                        </button>
+                    </h3>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#gradingFaq">
+                        <div class="accordion-body">
+                            Online grade calculators offer several advantages:
+                            <ul>
+                                <li>Instant calculations without manual math</li>
+                                <li>Accurate results every time</li>
+                                <li>Multiple calculation types (EZ Grader, weighted averages, final grade predictions)</li>
+                                <li>Accessible from any device with internet access</li>
+                                <li>Free to use and always available</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weighted Grades FAQ -->
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                            How do weighted grades work in the average grade calculator?
+                        </button>
+                    </h3>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#gradingFaq">
+                        <div class="accordion-body">
+                            The weighted grade calculator takes into account both your grade and its importance (weight) in the final average. For example, if a midterm is worth 30% of your grade and a final is worth 70%, the calculator will properly factor these weights into your final grade calculation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </main>
 {% endblock %}
