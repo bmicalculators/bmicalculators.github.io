@@ -310,11 +310,19 @@ body {
 
 /* Chart styling */
 #bmiChart {
+    height: 300px !important;
     margin: 2rem 0;
-    border-radius: 8px;
-    background: #343a40;
     padding: 1rem;
+    background: var(--bg-darker);
+    border-radius: 8px;
     box-shadow: var(--card-shadow);
+}
+
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 300px;
+    width: 100%;
 }
 
 /* Age-specific advice styling */

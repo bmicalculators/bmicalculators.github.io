@@ -25,13 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
             data: {
                 labels: ['Underweight', 'Normal', 'Overweight', 'Obese'],
                 datasets: [{
-                    label: 'BMI Ranges',
+                    label: 'BMI Range',
                     data: [18.5, 24.9, 29.9, 35],
                     backgroundColor: [
-                        'rgba(23, 162, 184, 0.5)',  // Info
-                        'rgba(40, 167, 69, 0.5)',   // Success
-                        'rgba(255, 193, 7, 0.5)',   // Warning
-                        'rgba(220, 53, 69, 0.5)'    // Danger
+                        'rgba(23, 162, 184, 0.7)',  // Info - Underweight
+                        'rgba(40, 167, 69, 0.7)',   // Success - Normal
+                        'rgba(255, 193, 7, 0.7)',   // Warning - Overweight
+                        'rgba(220, 53, 69, 0.7)'    // Danger - Obese
                     ],
                     borderColor: [
                         'rgb(23, 162, 184)',
@@ -39,15 +39,37 @@ document.addEventListener('DOMContentLoaded', function() {
                         'rgb(255, 193, 7)',
                         'rgb(220, 53, 69)'
                     ],
-                    borderWidth: 1
+                    borderWidth: 2
                 }]
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: 40
+                        max: 40,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
                     }
                 }
             }
