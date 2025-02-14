@@ -5,96 +5,92 @@
     <section class="mb-5">
         <h1 class="display-4 mb-4">Men's BMI Calculator</h1>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title mb-4">Calculate Your BMI</h2>
+        <!-- Calculator Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title mb-4">Calculate Your BMI</h2>
 
-                        <!-- Personal Information -->
-                        <div class="mb-3">
-                            <label for="age" class="form-label">Age (years)</label>
-                            <input type="number" class="form-control" id="age" min="18" max="120">
+                <!-- Personal Information -->
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age (years)</label>
+                    <input type="number" class="form-control" id="age" min="18" max="120">
+                </div>
+
+                <!-- Unit Toggle -->
+                <div class="btn-group mb-4" role="group" aria-label="Unit Toggle">
+                    <input type="radio" class="btn-check" name="units" id="metric" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="metric">Metric</label>
+
+                    <input type="radio" class="btn-check" name="units" id="imperial" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="imperial">Imperial</label>
+                </div>
+
+                <!-- Metric Inputs -->
+                <div id="metric-inputs">
+                    <div class="mb-3">
+                        <label for="weight-kg" class="form-label">Weight (kg)</label>
+                        <input type="number" class="form-control" id="weight-kg" min="20" max="300" step="0.1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="height-cm" class="form-label">Height (cm)</label>
+                        <input type="number" class="form-control" id="height-cm" min="100" max="250">
+                    </div>
+                </div>
+
+                <!-- Imperial Inputs -->
+                <div id="imperial-inputs" style="display: none;">
+                    <div class="mb-3">
+                        <label for="weight-lb" class="form-label">Weight (lbs)</label>
+                        <input type="number" class="form-control" id="weight-lb" min="44" max="660" step="0.1">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="height-ft" class="form-label">Height (ft)</label>
+                            <input type="number" class="form-control" id="height-ft" min="3" max="8">
                         </div>
-
-                        <!-- Unit Toggle -->
-                        <div class="btn-group mb-4" role="group" aria-label="Unit Toggle">
-                            <input type="radio" class="btn-check" name="units" id="metric" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" for="metric">Metric</label>
-
-                            <input type="radio" class="btn-check" name="units" id="imperial" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="imperial">Imperial</label>
-                        </div>
-
-                        <!-- Metric Inputs -->
-                        <div id="metric-inputs">
-                            <div class="mb-3">
-                                <label for="weight-kg" class="form-label">Weight (kg)</label>
-                                <input type="number" class="form-control" id="weight-kg" min="20" max="300" step="0.1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="height-cm" class="form-label">Height (cm)</label>
-                                <input type="number" class="form-control" id="height-cm" min="100" max="250">
-                            </div>
-                        </div>
-
-                        <!-- Imperial Inputs -->
-                        <div id="imperial-inputs" style="display: none;">
-                            <div class="mb-3">
-                                <label for="weight-lb" class="form-label">Weight (lbs)</label>
-                                <input type="number" class="form-control" id="weight-lb" min="44" max="660" step="0.1">
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label for="height-ft" class="form-label">Height (ft)</label>
-                                    <input type="number" class="form-control" id="height-ft" min="3" max="8">
-                                </div>
-                                <div class="col">
-                                    <label for="height-in" class="form-label">Inches</label>
-                                    <input type="number" class="form-control" id="height-in" min="0" max="11">
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-primary w-100" onclick="calculateBMI('men')">Calculate BMI</button>
-
-                        <div id="bmi-result" class="mt-4 text-center" style="display: none;">
-                            <h3>Your BMI</h3>
-                            <div class="display-4 mb-3" id="bmi-value">-</div>
-                            <p class="lead" id="bmi-category"></p>
-                            <p id="age-specific-advice"></p>
+                        <div class="col">
+                            <label for="height-in" class="form-label">Inches</label>
+                            <input type="number" class="form-control" id="height-in" min="0" max="11">
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="card-title mb-4">BMI Categories for Men</h2>
-                        <canvas id="bmiChart"></canvas>
-                        <div class="mt-4">
-                            <h3>BMI Range Categories</h3>
-                            <ul class="list-group">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Underweight
-                                    <span class="badge bg-info rounded-pill">Below 18.5</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Normal Weight
-                                    <span class="badge bg-success rounded-pill">18.5 - 24.9</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Overweight
-                                    <span class="badge bg-warning rounded-pill">25 - 29.9</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Obese
-                                    <span class="badge bg-danger rounded-pill">30 or greater</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <button class="btn btn-primary w-100" onclick="calculateBMI('men')">Calculate BMI</button>
+
+                <div id="bmi-result" class="mt-4 text-center" style="display: none;">
+                    <h3>Your BMI</h3>
+                    <div class="display-4 mb-3" id="bmi-value">-</div>
+                    <p class="lead" id="bmi-category"></p>
+                    <p id="age-specific-advice"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BMI Categories Section -->
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title mb-4">BMI Categories for Men</h2>
+                <canvas id="bmiChart"></canvas>
+                <div class="mt-4">
+                    <h3>BMI Range Categories</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Underweight
+                            <span class="badge bg-info rounded-pill">Below 18.5</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Normal Weight
+                            <span class="badge bg-success rounded-pill">18.5 - 24.9</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Overweight
+                            <span class="badge bg-warning rounded-pill">25 - 29.9</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Obese
+                            <span class="badge bg-danger rounded-pill">30 or greater</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
