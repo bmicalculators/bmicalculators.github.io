@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Free online grade calculators including EZ Grader, Average Grade Calculator, and Final Grade Calculator. Calculate your grades quickly and accurately.">
     <title>Grade Calculators - Free Online Grade Calculator Tools</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -44,11 +44,20 @@
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h5>Grade Calculators</h5>
                     <p>Free online tools for students and educators</p>
                 </div>
-                <div class="col-md-6 text-md-end">
+                <div class="col-md-4">
+                    <h5>Useful Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ url_for('request_calculator') }}" class="text-light">Request a Calculator</a></li>
+                        <li><a href="{{ url_for('terms') }}" class="text-light">Terms of Use</a></li>
+                        <li><a href="{{ url_for('privacy') }}" class="text-light">Privacy Policy</a></li>
+                        <li><a href="{{ url_for('disclaimer') }}" class="text-light">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-md-end">
                     <p>© 2023 Grade Calculators. All rights reserved.</p>
                 </div>
             </div>

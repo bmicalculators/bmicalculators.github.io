@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container mt-4">
+    <section class="mb-5">
+        <h1 class="display-4 mb-4">Request a Calculator</h1>
+        
+        <div class="content">
+            <p class="lead">Have an idea for a new calculator? We'd love to hear it!</p>
+            
+            <form class="mt-4">
+                <div class="mb-3">
+                    <label for="calculatorType" class="form-label">Calculator Type</label>
+                    <input type="text" class="form-control" id="calculatorType" placeholder="e.g., Weighted Assignment Calculator">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="4" placeholder="Describe how the calculator should work..."></textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email (optional)</label>
+                    <input type="email" class="form-control" id="email" placeholder="your@email.com">
+                    <div class="form-text">We'll only use this to follow up about your calculator request.</div>
+                </div>
+                
+                <button type="submit" class="btn btn-calculator">Submit Request</button>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock %}
