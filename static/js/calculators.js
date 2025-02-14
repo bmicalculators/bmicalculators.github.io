@@ -56,8 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize grade rows
-    addGradeRow();
+    // Initialize grade rows for all tabs
+    addGradeRow('percentage');
+    addGradeRow('letters');
+    addGradeRow('points');
 
     // Initialize letter grade selects for final calculator
     const letterOptions = Object.keys(letterGrades);
@@ -129,45 +131,49 @@ function updateGradingChart() {
 }
 
 // Average Grade Calculator
-let gradeRowCount = 0;
+let gradeRowCount = {
+    percentage: 0,
+    letters: 0,
+    points: 0
+};
 
-function addGradeRow() {
-    gradeRowCount++;
+function addGradeRow(forceType = null) {
     const activeTab = document.querySelector('.grade-type-tabs .tab-btn.active');
-    const tabType = activeTab.getAttribute('data-calculator-tab');
+    const tabType = forceType || activeTab.getAttribute('data-calculator-tab');
     const container = document.getElementById(`${tabType}-grades`);
 
     if (!container) return; // Guard clause if container not found
 
+    gradeRowCount[tabType]++;
     const row = document.createElement('div');
     row.className = 'row grade-row';
 
     if (tabType === 'points') {
         row.innerHTML = `
-            <div class="col-2">${gradeRowCount}</div>
+            <div class="col-2">${gradeRowCount[tabType]}</div>
             <div class="col-5"><input type="number" class="form-control text-center" min="0" onchange="calculateAverage()"></div>
             <div class="col-5"><input type="number" class="form-control text-center" min="0" onchange="calculateAverage()"></div>
         `;
     } else if (tabType === 'letters') {
         row.innerHTML = `
-            <div class="col-2">${gradeRowCount}</div>
+            <div class="col-2">${gradeRowCount[tabType]}</div>
             <div class="col-5">
                 <select class="form-select text-center" onchange="calculateAverage()">
                     ${Object.keys(letterGrades).map(grade => `<option value="${grade}">${grade}</option>`).join('')}
                 </select>
             </div>
             <div class="col-5">
-                <input type="number" class="form-control text-center" min="0" max="100" onchange="calculateAverage()">
+                <input type="number" class="form-control text-center" min="0" max="100" value="100" onchange="calculateAverage()">
             </div>
         `;
     } else {
         row.innerHTML = `
-            <div class="col-2">${gradeRowCount}</div>
+            <div class="col-2">${gradeRowCount[tabType]}</div>
             <div class="col-5">
                 <input type="number" class="form-control text-center" min="0" max="100" onchange="calculateAverage()">
             </div>
             <div class="col-5">
-                <input type="number" class="form-control text-center" min="0" max="100" onchange="calculateAverage()">
+                <input type="number" class="form-control text-center" min="0" max="100" value="100" onchange="calculateAverage()">
             </div>
         `;
     }
@@ -183,7 +189,7 @@ function resetGrades() {
     if (!container) return; // Guard clause if container not found
 
     container.innerHTML = '';
-    gradeRowCount = 0;
+    gradeRowCount[tabType] = 0;
     document.getElementById('average-result').textContent = '-';
     addGradeRow();
 }
