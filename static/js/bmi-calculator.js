@@ -57,8 +57,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function calculateBMI(gender) {
     let weight, height;
+    const age = parseInt(document.getElementById('age').value);
     const metricRadio = document.getElementById('metric');
-    
+
+    if (!age || age < 18 || age > 120) {
+        alert('Please enter a valid age between 18 and 120 years.');
+        return;
+    }
+
     if (metricRadio.checked) {
         weight = parseFloat(document.getElementById('weight-kg').value);
         height = parseFloat(document.getElementById('height-cm').value) / 100; // Convert cm to meters
@@ -79,27 +85,57 @@ function calculateBMI(gender) {
     const bmiResult = document.getElementById('bmi-result');
     const bmiValue = document.getElementById('bmi-value');
     const bmiCategory = document.getElementById('bmi-category');
+    const ageAdvice = document.getElementById('age-specific-advice');
 
     bmiValue.textContent = bmi.toFixed(1);
-    
+
     let category;
     let categoryClass;
-    
+    let advice = '';
+
+    // Determine BMI category and provide age-specific advice
     if (bmi < 18.5) {
         category = 'Underweight';
         categoryClass = 'text-info';
+        advice = getAgeSpecificAdvice(age, gender, 'underweight');
     } else if (bmi < 25) {
         category = 'Normal Weight';
         categoryClass = 'text-success';
+        advice = getAgeSpecificAdvice(age, gender, 'normal');
     } else if (bmi < 30) {
         category = 'Overweight';
         categoryClass = 'text-warning';
+        advice = getAgeSpecificAdvice(age, gender, 'overweight');
     } else {
         category = 'Obese';
         categoryClass = 'text-danger';
+        advice = getAgeSpecificAdvice(age, gender, 'obese');
     }
 
     bmiCategory.textContent = category;
     bmiCategory.className = `lead ${categoryClass}`;
+    ageAdvice.textContent = advice;
     bmiResult.style.display = 'block';
+}
+
+function getAgeSpecificAdvice(age, gender, category) {
+    let advice = '';
+
+    if (age < 25) {
+        advice = 'Young adults should focus on establishing healthy lifestyle habits.';
+    } else if (age < 45) {
+        advice = 'Adults in this age range should maintain regular physical activity and balanced nutrition.';
+    } else if (age < 65) {
+        advice = 'Middle-aged adults should focus on preventing age-related weight gain through diet and exercise.';
+    } else {
+        advice = 'Seniors should consult with healthcare providers about appropriate weight management strategies.';
+    }
+
+    if (category === 'underweight') {
+        advice += ' Consider consulting a healthcare provider about healthy weight gain strategies.';
+    } else if (category === 'overweight' || category === 'obese') {
+        advice += ' Focus on gradual, sustainable weight loss through healthy eating and regular exercise.';
+    }
+
+    return advice;
 }
