@@ -22,26 +22,41 @@
 
     <!-- Schema.org markup for BMI Calculator -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "BMI Calculator",
-      "description": "A comprehensive Body Mass Index calculator providing gender-specific calculations and health insights.",
-      "url": "https://bmicalculators.github.io",
-      "applicationCategory": "HealthApplication",
-      "operatingSystem": "All",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "featureList": [
-        "Gender-specific BMI calculations",
-        "Metric and Imperial unit support",
-        "Personalized health recommendations",
-        "Age-specific BMI insights"
-      ]
-    }
+{
+  "@context": "https://schema.org",
+  "@type": ["WebApplication", "HealthTopicContent"],
+  "name": "BMI Calculator",
+  "description": "A comprehensive Body Mass Index calculator providing gender-specific calculations and health insights.",
+  "url": "https://bmicalculators.github.io",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "about": {
+    "@type": "MedicalCalculator",
+    "medicineSystem": "Western Medicine",
+    "healthCondition": "Body Mass Index (BMI)",
+    "purpose": "Calculate and evaluate body mass index based on height and weight"
+  },
+  "featureList": [
+    "Gender-specific BMI calculations",
+    "Metric and Imperial unit support",
+    "Personalized health recommendations",
+    "Age-specific BMI insights"
+  ],
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Health conscious individuals"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "BMI Calculator",
+    "url": "https://bmicalculators.github.io"
+  }
+}
     </script>
 
     <!-- Bootstrap CSS -->
