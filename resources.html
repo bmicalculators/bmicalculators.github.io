@@ -27,71 +27,71 @@
     <link href="static/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg">
-                <a href="/index.html" class="navbar-brand d-flex align-items-center">
-                    <i class="fas fa-calculator me-2"></i>
-                    <span>BMI Calculator</span>
-                </a>
-                <!-- Desktop Navigation -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto d-none d-lg-flex">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/what-is-bmi.html">What is BMI</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/bmi-women.html">BMI Calculator Women</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/bmi-men.html">BMI Calculator Men</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/resources.html">Resources</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/about.html">About Us</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Mobile Menu Button -->
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Mobile Sidebar -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileSidebar">
-        <div class="offcanvas-header">
+    <!-- Header section with corrected mobile menu -->
+<header class="header">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
             <a href="/index.html" class="navbar-brand d-flex align-items-center">
                 <i class="fas fa-calculator me-2"></i>
                 <span>BMI Calculator</span>
             </a>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/what-is-bmi.html">What is BMI</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/bmi-women.html">BMI Calculator Women</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/bmi-men.html">BMI Calculator Men</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/resources.html">Resources</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about.html">About Us</a>
-                </li>
-            </ul>
-        </div>
+            <!-- Desktop Navigation -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto d-none d-lg-flex">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/what-is-bmi.html">What is BMI</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bmi-women.html">BMI Calculator Women</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bmi-men.html">BMI Calculator Men</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/resources.html">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about.html">About Us</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
     </div>
+</header>
+
+<!-- Mobile Sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+    <div class="offcanvas-header">
+        <a href="/index.html" class="navbar-brand d-flex align-items-center">
+            <i class="fas fa-calculator me-2"></i>
+            <span>BMI Calculator</span>
+        </a>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/what-is-bmi.html">What is BMI</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/bmi-women.html">BMI Calculator Women</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/bmi-men.html">BMI Calculator Men</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/resources.html">Resources</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about.html">About Us</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
     <!-- Main Content -->
     <main class="container mt-4">
